@@ -1,0 +1,14 @@
+<div class="checklist">
+{% for g in checklist %}
+  <fieldset>
+    <legend>{{ g.group }}</legend>
+    <ul>
+    {% for it in g["items"] %}
+      {% set cid = "ck-" ~ loop.index ~ "-" ~ (g.group|lower|replace(" ", "-")) %}
+      <li><input type="checkbox" id="{{ cid }}"><label for="{{ cid }}">{{ it }}</label></li>
+    {% endfor %}
+    </ul>
+  </fieldset>
+{% endfor %}
+</div>
+<p class="small">The boxes are for working through the list on screen; nothing is saved. The page prints cleanly for a paper review.</p>

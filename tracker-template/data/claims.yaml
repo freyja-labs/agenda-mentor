@@ -1,0 +1,21 @@
+# SAMPLE DATA (fictional). The claims ledger. status: open | fixed | accepted
+- id: CL-01
+  claim: "Partners with two districts"
+  record: "One district agreed in principle; no signed agreement"
+  fix: "Say one partner district, agreement in progress"
+  severity: high
+  status: fixed
+
+- id: CL-02
+  claim: "Leads a statewide teacher-noticing network"
+  record: "Not on the CV; a colleague leads it and Rivera attends"
+  fix: "Remove, or describe as a member"
+  severity: medium
+  status: fixed
+
+- id: CL-03
+  claim: "Validated measure of noticing"
+  record: "Item drafts only; no validity evidence yet"
+  fix: "Describe as a measure in development; validity evidence is the make-or-break result"
+  severity: high
+  status: fixed

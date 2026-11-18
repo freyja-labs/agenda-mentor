@@ -1,0 +1,22 @@
+# SAMPLE DATA (fictional). impact and likelihood 1-5. status: open | watching | mitigated | closed
+- id: R-01
+  title: Teaching load crowds out the field test
+  impact: 4
+  likelihood: 4
+  thrust: [X, T2]
+  owner: Rivera
+  mitigation: "Ask for a protected research day; batch the methods-course grading."
+  trigger: "Fewer than two research blocks held in any three-week stretch"
+  status: open
+  links: [A-005]
+
+- id: R-02
+  title: The district's research office delays the agreement past the spring window
+  impact: 5
+  likelihood: 3
+  thrust: [AL, T2]
+  owner: Rivera
+  mitigation: "Start the agreement in January; line up a second district as a fallback."
+  trigger: "No draft response by Feb 28"
+  status: watching
+  links: [G1, E-003]

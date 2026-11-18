@@ -1,0 +1,82 @@
+# The agenda's sections. `key` values are the section identifiers in
+# schema/agenda.schema.json, shared with any tool that stores agendas.
+- key: title_block
+  title: Title block
+  contains: The agenda's name as a memorable phrase and a descriptive subtitle, the faculty member's name, and the date.
+  bar: Someone outside the field can repeat the name and say what it promises.
+  failure: A name already owned by a product, program, or paper.
+- key: opening
+  title: Opening
+  contains: Competitiveness, why funders care, and the make-or-break result with its engine check.
+  bar: Every asset has evidence; the make-or-break result is measurable within two years and names what must exist at months 6 and 12.
+  failure: A make-or-break result with no money, people, or code behind it.
+- key: grand_challenge
+  title: The grand challenge
+  contains: The core question, three field-level grand challenges with the nearest work and the gap, the faculty member's contribution to each, and the core thesis.
+  bar: Each gap survives a search for products, surveys, and the closest groups.
+  failure: A gap stated broadly enough that a reviewer can name a tool that fills it.
+- key: signature
+  title: Signature contributions and path to recognition
+  contains: Four contributions, the first being the name to own, and a recognition test six years out.
+  bar: The name to own is unclaimed, and the test describes something observable in the field.
+  failure: Contributions that restate the thrusts.
+- key: board_focus
+  title: Focus from the whiteboard
+  contains: The board's field, area, and topic; its objective; and three science questions, each nested under a grand challenge with eminent people, gaps, and seminal works.
+  bar: Board content and suggested content are labeled apart, names are spelled correctly, and every citation resolves.
+  failure: The board's challenges reuse the grand-challenge labels, so the document has two taxonomies.
+- key: metrics
+  title: Metrics
+  contains: Two or three metrics per science question, each with its definition, baseline, and near and far targets.
+  bar: Each metric names its test or design, statistic, unit, baseline, and budget or sample.
+  failure: Targets with no unit, statistic, or named baseline.
+- key: existing_research
+  title: Why existing research is not enough
+  contains: The communities involved, field leaders and the nearest groups, application leaders, seminal works, existing agendas, and why a new agenda.
+  bar: The two or three closest groups are named with a collaborate-or-differentiate call.
+  failure: Leader tables built from memory that omit the closest competitor.
+- key: thrusts
+  title: Research thrusts
+  contains: Up to three research thrusts, an application lens, and a broader-impacts layer, each with approach, people, deliverables, and funder value; an alignment table.
+  bar: Every thrust has a person and a funding path, or is labeled as waiting for one.
+  failure: Five thrusts for one lab.
+- key: outcomes
+  title: Artifacts, outcomes, and positioning
+  contains: Artifacts with dates, outcome targets with baselines, and a positioning statement against each neighboring community.
+  bar: Baselines come from the record; targets are written as targets.
+  failure: Aspirations written in the present tense.
+- key: funding
+  title: Funding landscape
+  contains: What changed, a funding map with next dates and confidence levels, and a five-step sequence.
+  bar: Every program is current on the day the agenda is dated, with a source.
+  failure: A program that closed, or a deadline that already passed.
+- key: convening
+  title: Convening
+  contains: Venues, the case for a community agenda, a sponsor plan, the working session design, and regional partners.
+  bar: The session and any consortium are gated on a sponsor and a flagship acceptance.
+  failure: A regional alliance proposed before a single joint project.
+- key: publishing
+  title: Publishing, leadership, and recognition pathway
+  contains: A venue plan by year, the community cycle with gates, and the recognition ladder from the current career stage.
+  bar: Each recognition step names the evidence it needs.
+  failure: Recognition targets with no evidence plan.
+- key: capacity
+  title: Capacity
+  contains: Hours the plan needs, the current load, what will be handed off or declined, and protected research time.
+  bar: The numbers add up for the person's actual week.
+  failure: A plan that assumes time the faculty member does not have.
+- key: claims_ledger
+  title: Claims ledger
+  contains: Every claim about the faculty member's record, assets, collaborators, and partners, with its record and status.
+  bar: Every row reads supported before circulation.
+  failure: Present tense for ended work; collaborators who have not agreed.
+- key: decisions
+  title: Open decisions
+  contains: Numbered questions in the order to ask them, each with options and a recommendation.
+  bar: Each decision changes something in the plan.
+  failure: Decisions that are really tasks.
+- key: sources
+  title: Sources
+  contains: Every source, linked, with confidence levels for dates and "(confirm)" on general-knowledge items.
+  bar: A reader can check any fact in under a minute.
+  failure: Unresolvable citations.

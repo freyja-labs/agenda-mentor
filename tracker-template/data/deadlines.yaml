@@ -1,0 +1,43 @@
+# SAMPLE DATA (fictional). Sources point to example.org; real trackers link the funder's page.
+# confidence: verified | reported | derived | expected | record
+- id: E-001
+  title: Example Foundation seed grants due
+  date: 2027-03-15
+  time: "17:00"
+  tz: America/New_York
+  kind: deadline
+  confidence: expected
+  thrust: [T2]
+  source: https://example.org/seed-grants
+  links: [F-02]
+  status: tracking
+  note: "Projected from last year's cycle; replace when the call is released."
+
+- id: E-002
+  title: Field's annual meeting proposals due
+  date: 2027-07-15
+  kind: deadline
+  confidence: derived
+  thrust: [T1, X]
+  source: https://example.org/annual-meeting
+  status: tracking
+
+- id: E-003
+  title: Partner district research-office review window closes
+  date: 2027-02-28
+  kind: deadline
+  confidence: reported
+  thrust: [AL]
+  source: https://example.org/district-research
+  links: [G1]
+  status: tracking
+
+- id: E-004
+  title: Start-up funds end
+  date: 2027-08-31
+  kind: award_end
+  confidence: record
+  thrust: [X]
+  source: https://example.org/offer-letter
+  links: [F-01]
+  status: tracking

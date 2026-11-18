@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}{{ meta.title }}: {{ cfg.site_name }}{% endblock %}
+{% block description %}{{ meta.description }}{% endblock %}
+{% block bodyclass %}page-prompts{% endblock %}
+{% block main %}
+<div class="wrap">
+  <div class="prose prose-head">
+    <h1>{{ meta.title }}</h1>
+    <p class="lede">{{ meta.description }}</p>
+    {{ intro|safe }}
+  </div>
+
+  <noscript><p class="note-red">The builder needs JavaScript. The prompt files are plain Markdown in the <a href="{{ repo_url }}/tree/{{ cfg.branch }}/prompts">repository</a>; replace each placeholder by hand.</p></noscript>
+
+  <div class="builder" id="builder" hidden>
+    <form class="b-form" id="intake" autocomplete="off">
+      <fieldset>
+        <legend>About you</legend>
+        <label for="f-name">Full name</label><input id="f-name" name="name" type="text">
+        <label for="f-surname">Surname, as the agenda should use it</label><input id="f-surname" name="surname" type="text">
+        <label for="f-title">Title</label><input id="f-title" name="title" type="text" placeholder="Assistant Professor">
+        <label for="f-department">Department</label><input id="f-department" name="department" type="text">
+        <label for="f-institution">Institution</label><input id="f-institution" name="institution" type="text">
+        <label for="f-career_stage">Career stage</label>
+        <select id="f-career_stage" name="career_stage">
+          <option value="assistant professor">Assistant professor</option>
+          <option value="associate professor">Associate professor</option>
+          <option value="full professor">Full professor</option>
+          <option value="research faculty">Research faculty</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <legend>Your field</legend>
+        <label for="f-profile">Discipline profile</label>
+        <select id="f-profile" name="profile">
+          {% for p in profiles %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}
+        </select>
+        <p class="hint" id="profile-hint"></p>
+        <label for="f-field">Your field, in the words you would use with a program officer</label>
+        <input id="f-field" name="field" type="text" placeholder="hardware security; mathematics education">
+      </fieldset>
+      <fieldset>
+        <legend>Intake</legend>
+        <label for="f-wants">What you want to be known for</label><textarea id="f-wants" name="wants" rows="2"></textarea>
+        <label for="f-funding">Current funding, with end dates</label><textarea id="f-funding" name="funding" rows="3"></textarea>
+        <label for="f-people">People who work with you, and on what</label><textarea id="f-people" name="people" rows="3"></textarea>
+        <label for="f-load">Teaching and service load</label><textarea id="f-load" name="load" rows="2"></textarea>
+        <label for="f-context">Institutional context: clusters, centers, partners, regional assets</label><textarea id="f-context" name="context" rows="2"></textarea>
+        <label for="f-constraints">Anything to leave out (names, affiliations, sponsors)</label><textarea id="f-constraints" name="constraints" rows="2"></textarea>
+      </fieldset>
+      <fieldset>
+        <legend>Inputs</legend>
+        <label for="f-whiteboard">Confirmed whiteboard transcription (the output of prompt 1)</label><textarea id="f-whiteboard" name="whiteboard" rows="5"></textarea>
+        <label for="f-series">Shared landscape notes from your cohort (optional)</label><textarea id="f-series" name="series" rows="2"></textarea>
+        <label for="f-mentor">Mentor (optional)</label><input id="f-mentor" name="mentor" type="text">
+      </fieldset>
+      <fieldset class="row3">
+        <legend>Dates</legend>
+        <div><label for="f-date">Agenda date</label><input id="f-date" name="date_iso" type="date"></div>
+        <div><label for="f-horizon">Horizon (years)</label><input id="f-horizon" name="horizon_years" type="number" min="3" max="10" value="5"></div>
+        <div><label for="f-mob">Make-or-break (months)</label><input id="f-mob" name="makeorbreak_months" type="number" min="12" max="36" value="24"></div>
+      </fieldset>
+      <p class="form-foot">Saved in this browser only. <button type="button" class="linkish" id="clear">Clear the form</button></p>
+    </form>
+
+    <section class="b-out" aria-labelledby="out-h">
+      <h2 id="out-h" class="vh">Your prompts</h2>
+      <ol class="p-pick" role="radiogroup" aria-label="Choose a prompt">
+        {% for p in prompts %}
+        <li id="p{{ p.id }}"><label><input type="radio" name="pick" value="{{ p.id }}"{% if loop.first %} checked{% endif %}> <span class="pp-n">{{ p.n }}</span> {{ p.title }}</label></li>
+        {% endfor %}
+      </ol>
+      <div class="p-notes" id="p-notes"></div>
+      <div class="p-bar">
+        <p class="p-status" id="p-status" aria-live="polite"></p>
+        <div class="p-actions">
+          <button type="button" class="btn" id="copy">Copy prompt</button>
+          <button type="button" class="btn btn-quiet" id="download">Download .md</button>
+        </div>
+      </div>
+      <div class="sheet" id="sheet" tabindex="0" aria-label="The filled-in prompt"></div>
+    </section>
+  </div>
+
+  <div class="prose prose-after">
+    <h2 id="the-files">The prompt files</h2>
+    <p>Each prompt is a plain Markdown file in the repository, so changes are reviewed like code.</p>
+    <ol>
+      {% for p in prompts %}<li><a href="{{ repo_url }}/blob/{{ cfg.branch }}/{{ p.file }}">{{ p.title }}</a></li>{% endfor %}
+    </ol>
+    <p>The chain keeps the section skeleton of an R&amp;D agenda format that was used across a faculty series, and adds the checks a red-team review of that format showed were missing. <a href="reconstruction/index.html">The original format, reconstructed</a>.</p>
+  </div>
+</div>
+<script id="portal-data" type="application/json">{{ portal_json|safe }}</script>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/js/builder.js"></script>{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}{{ p.name }}: {{ cfg.site_name }}{% endblock %}
+{% block description %}{{ p.summary }}{% endblock %}
+{% block bodyclass %}page-profile{% endblock %}
+{% block main %}
+<div class="wrap doc">
+  <nav class="toc" aria-label="On this page">
+    <p class="toc-h">On this page</p>
+    <ul>
+      <li><a href="#recognition">Recognition</a></li>
+      <li><a href="#record">The record and venues</a></li>
+      <li><a href="#funders">Funders</a></li>
+      <li><a href="#evidence">Standards of evidence</a></li>
+      <li><a href="#community">Convening and the community cycle</a></li>
+      <li><a href="#pitfalls">Pitfalls</a></li>
+      <li><a href="#as-pasted">As pasted into the prompts</a></li>
+    </ul>
+  </nav>
+  <article class="prose">
+    <p class="crumb"><a href="../index.html">Discipline profiles</a></p>
+    <h1>{{ p.name }}</h1>
+    <p class="lede">{{ p.summary }}</p>
+    {% if not p.reviewed_by %}<p class="note-red">No senior colleague in this field has reviewed this profile yet. Treat it as a draft, and see the <a href="../index.html#add-your-field">review steps</a>.</p>{% endif %}
+
+    <h2 id="recognition">Recognition</h2>
+    <p><strong>{{ p.academy.name }}.</strong> {{ p.academy.basis }}{% if p.academy.url %} <a href="{{ p.academy.url }}">Official site</a>.{% endif %}</p>
+    <h3>Early career</h3>
+    <ul>{% for x in p.ladder.early %}<li>{{ x }}</li>{% endfor %}</ul>
+    <h3>Mid career</h3>
+    <ul>{% for x in p.ladder.mid %}<li>{{ x }}</li>{% endfor %}</ul>
+    <h3>Senior</h3>
+    <ul>{% for x in p.ladder.senior %}<li>{{ x }}</li>{% endfor %}</ul>
+
+    <h2 id="record">The record and venues</h2>
+    <p>{{ p.record_norms }}</p>
+    <p>{{ p.venues }}</p>
+
+    <h2 id="funders">Funders</h2>
+    <ul>{% for x in p.funders %}<li>{{ x }}</li>{% endfor %}</ul>
+    <p class="note-red">{{ p.verify_note }}</p>
+
+    <h2 id="evidence">Standards of evidence</h2>
+    <h3>Metric conventions</h3>
+    <ul>{% for x in p.metric_conventions %}<li>{{ x }}</li>{% endfor %}</ul>
+    <h3>Make-or-break results this field recognizes</h3>
+    <ul>{% for x in p.makeorbreak_archetypes %}<li>{{ x }}</li>{% endfor %}</ul>
+    <h3>Alignment frameworks</h3>
+    <ul>{% for x in p.alignment_frameworks %}<li>{{ x }}</li>{% endfor %}</ul>
+    <h3>Application leaders</h3>
+    <ul>{% for x in p.application_leaders %}<li>{{ x }}</li>{% endfor %}</ul>
+
+    <h2 id="community">Convening and the community cycle</h2>
+    <ul>{% for x in p.convening_forms %}<li>{{ x }}</li>{% endfor %}</ul>
+    <ol>{% for x in p.community_cycle %}<li>{{ x }}</li>{% endfor %}</ol>
+
+    <h2 id="pitfalls">Pitfalls</h2>
+    <ul>{% for x in p.pitfalls %}<li>{{ x }}</li>{% endfor %}</ul>
+
+    <h2 id="as-pasted">As pasted into the prompts</h2>
+    <pre class="block">{{ block }}</pre>
+  </article>
+</div>
+{% endblock %}

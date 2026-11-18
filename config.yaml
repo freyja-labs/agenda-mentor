@@ -1,0 +1,8 @@
+# Site settings. `repo` is the GitHub owner/name that hosts this site; links to source
+# files on the site point there. Change it if the repository moves.
+site_name: Agenda Mentor
+tagline: Research agendas drafted from your own whiteboard, checked against your record, and tracked with a mentor.
+repo: ucf-draco-mike/agenda-mentor
+branch: main
+# Shown in the footer. Leave empty for no institution.
+host_note: ""

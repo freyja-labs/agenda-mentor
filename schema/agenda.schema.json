@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ucf-draco-mike/agenda-mentor/schema/agenda.schema.json",
+  "title": "Research agenda",
+  "description": "One research agenda in the Agenda Mentor format. Section keys match data/anatomy.yaml; each section holds Markdown. Tools that store agendas use the same keys, so an agenda can move between them.",
+  "type": "object",
+  "required": ["format", "title", "owner", "discipline", "dated", "sections"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "agenda-mentor/1" },
+    "title": { "type": "string", "minLength": 1, "description": "The agenda's name: a memorable phrase, a colon, and a subtitle." },
+    "owner": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "title": { "type": "string" },
+        "department": { "type": "string" },
+        "institution": { "type": "string" },
+        "career_stage": { "enum": ["assistant", "associate", "full", "other"] }
+      }
+    },
+    "discipline": { "type": "string", "description": "A profile id from data/disciplines.yaml." },
+    "dated": { "type": "string", "format": "date" },
+    "version": { "type": "integer", "minimum": 1 },
+    "horizon_years": { "type": "integer", "minimum": 1, "maximum": 10, "default": 5 },
+    "makeorbreak_months": { "type": "integer", "minimum": 6, "maximum": 48, "default": 24 },
+    "whiteboard": { "type": "string", "description": "The confirmed transcription from prompt 1." },
+    "sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title_block": { "$ref": "#/$defs/section" },
+        "opening": { "$ref": "#/$defs/section" },
+        "grand_challenge": { "$ref": "#/$defs/section" },
+        "signature": { "$ref": "#/$defs/section" },
+        "board_focus": { "$ref": "#/$defs/section" },
+        "metrics": { "$ref": "#/$defs/section" },
+        "existing_research": { "$ref": "#/$defs/section" },
+        "thrusts": { "$ref": "#/$defs/section" },
+        "outcomes": { "$ref": "#/$defs/section" },
+        "funding": { "$ref": "#/$defs/section" },
+        "convening": { "$ref": "#/$defs/section" },
+        "publishing": { "$ref": "#/$defs/section" },
+        "capacity": { "$ref": "#/$defs/section" },
+        "claims_ledger": { "$ref": "#/$defs/section" },
+        "decisions": { "$ref": "#/$defs/section" },
+        "sources": { "$ref": "#/$defs/section" }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "record", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^CL-[0-9]{2,}$" },
+          "claim": { "type": "string" },
+          "record": { "type": "string" },
+          "fix": { "type": "string" },
+          "severity": { "enum": ["high", "medium", "low"] },
+          "status": { "enum": ["open", "fixed", "accepted"] }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["question", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^D-[0-9]{2,}$" },
+          "order": { "type": "integer" },
+          "question": { "type": "string" },
+          "options": { "type": "array", "items": { "type": "string" } },
+          "recommendation": { "type": "string" },
+          "answer": { "type": "string" },
+          "status": { "enum": ["open", "asked", "decided", "deferred"] },
+          "decided_on": { "type": "string", "format": "date" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "section": { "type": "string", "description": "Markdown." }
+  }
+}

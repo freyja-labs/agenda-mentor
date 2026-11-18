@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ meta.title }}: {{ cfg.site_name }}{% endblock %}
+{% block description %}{{ meta.description }}{% endblock %}
+{% block bodyclass %}page-{{ slug }}{% endblock %}
+{% block main %}
+<div class="wrap doc">
+  {% if toc|length > 1 %}
+  <nav class="toc" aria-label="On this page">
+    <p class="toc-h">On this page</p>
+    <ul>
+      {% for t in toc %}<li><a href="#{{ t.id }}">{{ t.text }}</a></li>{% endfor %}
+    </ul>
+  </nav>
+  {% endif %}
+  <article class="prose">
+    <h1>{{ meta.title }}</h1>
+    <p class="lede">{{ meta.description }}</p>
+    {{ body|safe }}
+  </article>
+</div>
+{% endblock %}

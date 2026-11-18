@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ meta.title }}: {{ cfg.site_name }}{% endblock %}
+{% block description %}{{ meta.description }}{% endblock %}
+{% block bodyclass %}page-profiles{% endblock %}
+{% block main %}
+<div class="wrap">
+  <article class="prose">
+    <h1>{{ meta.title }}</h1>
+    <p class="lede">{{ meta.description }}</p>
+    {{ intro|safe }}
+  </article>
+  <table class="wide">
+    <thead><tr><th scope="col">Profile</th><th scope="col">Highest recognition</th><th scope="col">Who it fits</th><th scope="col">Reviewed</th></tr></thead>
+    <tbody>
+    {% for p in profiles %}
+      <tr>
+        <td><a href="{{ p.id }}/index.html">{{ p.name }}</a></td>
+        <td>{{ p.academy.name }}</td>
+        <td>{{ p.summary }}</td>
+        <td>{% if p.reviewed_by %}{{ p.reviewed_by }}, {{ p.reviewed_on }}{% else %}<span class="flag">Not yet</span>{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <div class="prose prose-after">
+    <h2 id="add-your-field">Add your field</h2>
+    <p>Copy the general profile in <code>data/disciplines.yaml</code>, fill in each field for your discipline with sources, and ask a senior colleague in the field to review it before you open a pull request. Profiles name funder types with examples, because programs change; the prompts make the model check each program on the day it runs.</p>
+  </div>
+</div>
+{% endblock %}

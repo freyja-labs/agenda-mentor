@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>R&amp;D agenda tracker</title>
+<style>
+  :root { color-scheme: light dark; --ink: #1b1d21; --muted: #5d6470; --rule: #c9ced6; --bg: #ffffff; --accent: #1f5fbf; --bad: #b3261e; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #e7e9ee; --muted: #a3aab6; --rule: #3a404a; --bg: #15171b; --accent: #7fb0ff; --bad: #ff8a80; } }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 26rem; margin: 18vh auto 0; padding: 0 1.25rem; border-top: 3px solid var(--ink); }
+  h1 { font-size: 1.25rem; margin: 1rem 0 0.25rem; }
+  p { margin: 0 0 1.25rem; color: var(--muted); }
+  label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
+  input[type=password] { box-sizing: border-box; width: 100%; font: inherit; padding: 0.55rem 0.6rem; color: var(--ink); background: transparent; border: 1px solid var(--rule); border-radius: 0; }
+  input[type=password]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 0.9rem; }
+  .remember { font-weight: 400; display: flex; align-items: center; gap: 0.4rem; margin: 0; color: var(--muted); }
+  button { font: inherit; font-weight: 600; padding: 0.5rem 1.1rem; color: var(--bg); background: var(--ink); border: 0; border-radius: 0; cursor: pointer; }
+  button[disabled] { opacity: 0.6; cursor: progress; }
+  #msg { min-height: 1.5em; margin-top: 0.9rem; color: var(--bad); }
+  noscript { color: var(--bad); }
+</style>
+</head>
+<body>
+<main>
+  <h1>R&amp;D agenda tracker</h1>
+  <p>Enter the password to open the dashboard. It opens in this browser only.</p>
+  <form id="unlock" autocomplete="on">
+    <label for="pw">Password</label>
+    <input id="pw" name="password" type="password" autocomplete="current-password" required autofocus>
+    <div class="row">
+      <label class="remember"><input id="remember" type="checkbox"> Remember on this device</label>
+      <button id="go" type="submit">Open</button>
+    </div>
+    <div id="msg" role="status" aria-live="polite"></div>
+  </form>
+  <noscript>The dashboard needs JavaScript to open.</noscript>
+</main>
+<script>
+(function () {
+  "use strict";
+  var P = { salt: "{{SALT}}", iv: "{{IV}}", data: "{{DATA}}", iterations: {{ITERATIONS}}, store: "{{STORAGE_KEY}}" };
+  var msg = document.getElementById("msg");
+  var go = document.getElementById("go");
+
+  function bytes(b64) {
+    var s = atob(b64), out = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
+    return out;
+  }
+  function toB64(buf) {
+    var s = "", b = new Uint8Array(buf);
+    for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+    return btoa(s);
+  }
+  function deriveKey(password) {
+    return crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"])
+      .then(function (base) {
+        return crypto.subtle.deriveKey(
+          { name: "PBKDF2", salt: bytes(P.salt), iterations: P.iterations, hash: "SHA-256" },
+          base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]);
+      });
+  }
+  function importKey(raw) {
+    return crypto.subtle.importKey("raw", bytes(raw), { name: "AES-GCM" }, true, ["decrypt"]);
+  }
+  function decrypt(key) {
+    return crypto.subtle.decrypt({ name: "AES-GCM", iv: bytes(P.iv) }, key, bytes(P.data)).then(function (plain) {
+      return new TextDecoder().decode(plain);
+    });
+  }
+  function show(html) {
+    document.open();
+    document.write(html);
+    document.close();
+  }
+  function remembered() {
+    try { return localStorage.getItem(P.store); } catch (e) { return null; }
+  }
+  function forget() {
+    try { localStorage.removeItem(P.store); } catch (e) { /* storage unavailable */ }
+  }
+
+  if (!(window.crypto && crypto.subtle)) {
+    msg.textContent = "This browser cannot decrypt the page. Open it over https in a current browser.";
+    go.disabled = true;
+    return;
+  }
+
+  var saved = remembered();
+  if (saved) {
+    importKey(saved).then(decrypt).then(show).catch(function () {
+      forget();
+      msg.textContent = "The saved password no longer works. Enter the current one.";
+    });
+  }
+
+  document.getElementById("unlock").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var password = document.getElementById("pw").value;
+    if (!password) return;
+    go.disabled = true;
+    msg.textContent = "Opening…";
+    var keep = document.getElementById("remember").checked;
+    deriveKey(password).then(function (key) {
+      return decrypt(key).then(function (html) {
+        var saving = keep
+          ? crypto.subtle.exportKey("raw", key).then(function (raw) {
+              try { localStorage.setItem(P.store, toB64(raw)); } catch (e) { /* storage unavailable */ }
+            })
+          : Promise.resolve();
+        return saving.then(function () { show(html); });
+      });
+    }).catch(function () {
+      go.disabled = false;
+      msg.textContent = "That password did not work.";
+    });
+  });
+})();
+</script>
+</body>
+</html>

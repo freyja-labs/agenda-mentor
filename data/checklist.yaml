@@ -1,0 +1,45 @@
+# Verification checklist, run before an agenda leaves the mentoring relationship.
+- group: Claims about the faculty member
+  items:
+    - Every sentence about the record, assets, collaborators, or partners has a row in the claims ledger.
+    - Each row cites a CV entry or an intake line.
+    - Present tense appears only for work with a current end date; ended work carries its dates.
+    - Named collaborators have agreed to be named.
+- group: Gap claims
+  items:
+    - Each gap was checked against commercial products, surveys or systematization papers, funded programs, and the closest groups.
+    - The gap is stated as narrowly as that search supports, with the nearest work named.
+    - The name to own is not already a product, program, or paper title.
+- group: People and affiliations
+  items:
+    - Names are spelled correctly, including any corrected from the whiteboard.
+    - Affiliations were checked on a current page, or are marked "(confirm)".
+    - The two or three closest groups appear, each with a collaborate-or-differentiate decision.
+- group: Citations
+  items:
+    - Every citation resolves to a DOI or a stable URL.
+    - Items from general knowledge are marked "(confirm)" until checked.
+- group: Dates and programs
+  items:
+    - Every external date has a confidence level (verified, reported, derived, expected, or record) and a source.
+    - No program in the funding map has closed, and no listed deadline has passed.
+    - Eligibility was read for each program (career stage, institution type, limits on submissions).
+- group: Partners and permissions
+  items:
+    - Sponsors, partner organizations, districts, and schools are named only with their permission.
+    - Any affiliation the faculty member keeps out of public documents is out of this one.
+    - Plans that involve human participants or student records allow time for review and data agreements.
+- group: Metrics
+  items:
+    - Each metric names its test or design, statistic, unit, baseline, and budget or sample.
+    - Targets are written as targets, beside the baseline.
+- group: Capacity
+  items:
+    - The thrusts each have a person and a funding path, or are labeled as waiting for one.
+    - Community artifacts are gated on a sponsor and a flagship acceptance.
+    - The hours add up for the faculty member's actual week.
+- group: Consistency
+  items:
+    - One taxonomy: grand challenges GC1-GC3 and science questions S1-S3, never reused.
+    - Acronyms are spelled out at first use.
+    - No placeholders remain.

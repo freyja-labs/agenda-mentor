@@ -1,0 +1,49 @@
+# SAMPLE DATA (fictional). target_near and target_far are the years in agenda.yaml clock.target_years.
+- id: K-01
+  group: outcome
+  title: Journal articles from the agenda since month 0
+  definition: "Refereed journal articles; conference presentations excluded"
+  unit: count
+  direction: up
+  baseline: 0
+  baseline_note: "Lifetime: 2"
+  current: 0
+  as_of: 2026-11-30
+  target_near: 3
+  target_far: 8
+
+- id: K-02
+  group: outcome
+  title: External funding as principal investigator
+  definition: "Awarded amounts, in thousands of dollars"
+  unit: usd_k
+  direction: up
+  baseline: 0
+  current: 0
+  as_of: 2026-11-30
+  target_near: 50
+  target_far: 750
+
+- id: K-03
+  group: science
+  title: Teachers in the measure's field test
+  definition: "Teachers with complete responses across partner districts"
+  unit: count
+  direction: up
+  baseline: 0
+  current: 0
+  as_of: 2026-11-30
+  target_near: 300
+  target_far: 1200
+
+- id: K-04
+  group: people
+  title: Doctoral students working on the agenda
+  definition: "Advisees with a thrust assignment"
+  unit: count
+  direction: up
+  baseline: 0
+  current: 0
+  as_of: 2026-11-30
+  target_near: 2
+  target_far: 4

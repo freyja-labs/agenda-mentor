@@ -1,0 +1,323 @@
+# Discipline profiles. Each profile fills the same agenda skeleton with a field's own
+# recognition ladder, record norms, venues, funders, metric conventions, convening
+# forms, and community cycle. The prompt builder pastes the selected profile into
+# prompts 2, 3, and 6.
+#
+# Rules for editing (CONTRIBUTING.md has the full version):
+# - Paraphrase official criteria and link the official page in `academy.url`.
+# - Name funder TYPES with examples; programs change, so every profile carries
+#   `verify_note`, and the prompts make the model check status on the day it runs.
+# - `reviewed_by` and `reviewed_on` record the senior faculty member in the field who
+#   last checked the profile. An unreviewed profile shows a notice on the site.
+
+- id: engineering
+  mid_milestone: "Society Fellow (IEEE, ACM, ASME, and peers)"
+  name: Engineering and computing
+  summary: >-
+    For engineering and computing faculty aiming at the National Academy of Engineering,
+    with society fellowships (IEEE, ACM, ASME, AIChE, ASCE, AIAA, BMES, and others) as the
+    mid-career milestone.
+  agenda_term: R&D agenda
+  agenda_title_prefix: R&D Agenda
+  academy:
+    name: National Academy of Engineering (NAE)
+    url: https://www.nae.edu/
+    basis: >-
+      Members elect new members. Election recognizes outstanding contributions to
+      engineering research, practice, or education (including, where appropriate,
+      significant contributions to the engineering literature) and the pioneering of new
+      fields of technology, major advances in traditional fields, or innovative approaches
+      to engineering education. Nobody can apply; a current member nominates.
+  ladder:
+    early:
+      - "Tenure, and an early-career award that fits the field: the NSF Faculty Early Career Development (CAREER) award, a Department of War young investigator award (Air Force Office of Scientific Research, Office of Naval Research, Army Research Office), the DARPA Young Faculty Award, or the DOE Early Career Research Program"
+      - "Papers in the subfield's flagship venues and a best-paper award at one of them"
+      - "A first program-scale award as lead or co-lead"
+    mid:
+      - "Promotion to full professor"
+      - "Society Fellow (IEEE, ACM, ASME, AIChE, ASCE, AIAA, BMES, or the field's society), which requires a nomination and an extraordinary record"
+      - "Editorial and program-committee leadership; a center or multi-institution program"
+    senior:
+      - "National Academy of Engineering"
+      - "National Academy of Inventors Fellow; AAAS Fellow"
+      - "Service on a National Academies consensus-study committee"
+  record_norms: >-
+    In computing and much of electrical engineering, refereed papers at flagship conferences
+    carry the weight journals carry elsewhere; in most other engineering fields, archival
+    journals lead. Open tools, datasets, and benchmarks that outside groups use, patents that
+    are licensed, and technology a partner fields all count as record.
+  venues: >-
+    The flagship conferences and journals where the subfield's leaders publish and serve as
+    program chairs; society transactions for archival work; society magazines (for example,
+    IEEE Design & Test or Communications of the ACM) for agenda papers aimed at a broad
+    readership.
+  funders:
+    - "National Science Foundation: the Engineering and Computer and Information Science and Engineering directorates, and cross-cutting programs"
+    - "Department of War: DARPA, the service research offices, service laboratories, and the Microelectronics Commons hubs"
+    - "Department of Energy: the Office of Science, the applied offices, and national-laboratory collaborations"
+    - "NIST, NASA, and the National Institutes of Health (for bioengineering)"
+    - "Industry sponsored research, gifts, and consortia (for example, the Semiconductor Research Corporation)"
+    - "Foundations that fund engineering research in the area"
+  metric_conventions:
+    - "Measures the subfield already accepts, each with a named benchmark, test, statistic, unit, and budget (for example, the number of traces, samples, or runs)"
+    - "Performance against named baselines on shared designs or datasets"
+    - "Costs reported beside every gain: power, area, latency, accuracy, or dollars"
+    - "Adoption: outside groups reporting results on the tool or benchmark, and partner evaluations with written reports"
+  makeorbreak_archetypes:
+    - "A working artifact (tool, design, or method) validated on real hardware or data, measured against a named baseline, and evaluated by an outside partner with a written report"
+    - "An open benchmark with ground truth and scoring rules, with two or more outside groups reporting results"
+    - "A sponsor demonstration that leads directly to a program-scale award"
+  alignment_frameworks:
+    - "Agency technology priorities current on the day the prompt runs (for example, the Department of War critical technology areas)"
+    - "The NAE Grand Challenges for Engineering"
+    - "National roadmaps or strategic plans for the subfield"
+  application_leaders:
+    - "National laboratories and agency program offices"
+    - "Defense and industrial primes, chip and software companies, utilities, and health systems"
+    - "Startups and spinouts in the area, including competitors' commercial products"
+  convening_forms:
+    - "An agency-sponsored workshop (NSF, DOE, or a Department of War research office) that produces a report the sponsor uses to steer its programs"
+    - "A Dagstuhl or Shonan seminar"
+    - "A workshop co-located with a flagship conference, built around a benchmark or challenge"
+    - "A National Academies workshop"
+  community_cycle:
+    - "Agenda paper, co-authored by the workshop participants, in a society magazine or flagship journal"
+    - "Guest-edited special issue in a society transactions journal"
+    - "Recurring workshop co-located with a flagship conference, with a benchmark challenge"
+    - "Handbook or edited volume"
+    - "Standing group: an IEEE technical committee, an ACM special interest group, or a track at an existing conference"
+  pitfalls:
+    - "Stating a gap that a commercial tool or a systematization paper already covers"
+    - "Writing flagship-venue output as current when the record shows it as a target"
+    - "Promising adoption by a partner without a named partner and a written agreement"
+    - "Metrics without a defined test, statistic, or budget"
+    - "Laboratory or company ties written in the present tense after the work ended"
+    - "Ignoring export-control or sponsor publication limits on defense-funded work"
+  verify_note: >-
+    Federal research programs, agency priorities, and early-career award rules change.
+    Check each program's current solicitation on the day the prompt runs.
+  reviewed_by: ""
+  reviewed_on: ""
+
+- id: education-research
+  mid_milestone: "AERA Fellow"
+  name: Education research
+  summary: >-
+    For faculty in colleges of education and education research centers aiming at the
+    National Academy of Education, with AERA Fellow as the mid-career milestone.
+  agenda_term: research agenda
+  agenda_title_prefix: Research Agenda
+  academy:
+    name: National Academy of Education (NAEd)
+    url: https://naeducation.org/
+    basis: >-
+      Members elect new members for outstanding scholarship or leadership related to
+      education. Current members submit nominations once a year.
+  ladder:
+    early:
+      - "Tenure, a first funded study as principal investigator, and early-career awards from the American Educational Research Association (AERA) divisions and special interest groups"
+      - "The NAEd/Spencer Postdoctoral Fellowship for scholars within a few years of the doctorate (check current eligibility)"
+      - "The NSF CAREER award where the program fits"
+    mid:
+      - "Promotion to full professor"
+      - "AERA Fellow, for significant scientific or scholarly contributions to education research; AERA members nominate"
+      - "Editor or associate editor of a field journal; leadership of a research-practice partnership or a multi-site study"
+      - "Service on a National Academies consensus-study committee"
+    senior:
+      - "National Academy of Education"
+      - "American Academy of Arts and Sciences"
+      - "Chairing a National Academies consensus study"
+  record_norms: >-
+    Journal articles in field and general education journals carry the record; books and
+    edited volumes count; conference presentations (including AERA) are usually not
+    archival. Measures, curricula, and frameworks that districts, programs, or states adopt
+    count as impact, as do policy briefs that shape decisions.
+  venues: >-
+    The AERA Annual Meeting; general journals such as the American Educational Research
+    Journal, Educational Researcher, Review of Educational Research, and Educational
+    Evaluation and Policy Analysis; and the field's own journals and meetings (for example,
+    the Journal of Research in Science Teaching and NARST, the Journal for Research in
+    Mathematics Education, Reading Research Quarterly, or the Journal of the Learning
+    Sciences and ICLS).
+  funders:
+    - "Federal education research: the Institute of Education Sciences and the NSF Directorate for STEM Education (both changed sharply in 2025 and 2026; verify every program and solicitation)"
+    - "Private foundations that fund education research, such as the Spencer Foundation and the William T. Grant Foundation, plus topic-specific foundations"
+    - "State education agencies and school districts, through contracts and research-practice partnerships"
+    - "Professional associations' grant programs (for example, AERA's)"
+  metric_conventions:
+    - "Effect sizes reported with the design, sample, comparison condition, and the evidence standard they meet (for example, What Works Clearinghouse standards for causal claims)"
+    - "Implementation fidelity and dosage beside every outcome"
+    - "Validity evidence for every measure, following the Standards for Educational and Psychological Testing"
+    - "Reach (teachers, students, schools, districts) and use that continues after funding ends"
+    - "Cost and cost-effectiveness"
+    - "For qualitative and design-based work: trustworthiness criteria and the conditions under which findings transfer"
+  makeorbreak_archetypes:
+    - "A well-powered efficacy or impact result from a research-practice partnership, preregistered, with data agreements signed"
+    - "A measure with validity evidence adopted by named districts or programs"
+    - "A framework or set of design principles adopted in teacher preparation, standards, or curricula beyond the home institution"
+    - "A shared dataset or consortium that outside researchers use"
+  alignment_frameworks:
+    - "National Academies consensus reports in the area"
+    - "State priorities and standards where the partners work"
+    - "Foundation and federal priorities current on the day the prompt runs"
+    - "Partner districts' improvement plans"
+  application_leaders:
+    - "School districts and state education agencies"
+    - "Teacher-preparation programs and professional-learning providers"
+    - "Curriculum developers, nonprofits, and community organizations"
+    - "Regional educational laboratories and technical-assistance centers (verify status)"
+  convening_forms:
+    - "A Spencer Foundation conference grant for a small research conference or focused symposium"
+    - "An NSF conference award"
+    - "An AERA research conference"
+    - "A National Academies workshop"
+    - "A meeting of research-practice partnerships working on the same problem"
+  community_cycle:
+    - "Agenda paper, co-authored by the convening's participants, in Educational Researcher or a field journal"
+    - "Guest-edited special issue of a field journal"
+    - "Recurring symposium: an annual AERA session series or a special-interest-group invited session"
+    - "Edited volume or handbook section"
+    - "Standing group: an AERA special interest group or a new strand at a field conference"
+  pitfalls:
+    - "Causal language from correlational designs"
+    - "Generalizing from one site, one district, or one cohort"
+    - "Naming partner districts, schools, or teachers without their permission"
+    - "Make-or-break timelines that ignore IRB review, data-sharing agreements, and FERPA"
+    - "Practitioner voice claimed without practitioners at the table"
+    - "Assuming a federal program still runs as it did last year"
+  verify_note: >-
+    Federal education research funding and several research infrastructures changed
+    sharply in 2025 and 2026. Check each program, laboratory, and solicitation on the day
+    the prompt runs.
+  reviewed_by: ""
+  reviewed_on: ""
+
+- id: engineering-education
+  mid_milestone: "ASEE Fellow"
+  name: Engineering education and discipline-based education research
+  summary: >-
+    For faculty who research teaching and learning in engineering, computing, or the
+    sciences. Two academies fit: the NAE recognizes innovative approaches to engineering
+    education, and the NAEd recognizes scholarship related to education.
+  agenda_term: research agenda
+  agenda_title_prefix: Research Agenda
+  academy:
+    name: National Academy of Engineering (engineering-education contributions) or National Academy of Education
+    url: https://www.nae.edu/
+    basis: >-
+      The NAE's criteria include developing and implementing innovative approaches to
+      engineering education; the NAEd elects members for outstanding scholarship or
+      leadership related to education. Both elect through member nominations.
+  ladder:
+    early:
+      - "Tenure, the NSF CAREER award in an engineering-education or STEM-education program, and division awards from the American Society for Engineering Education (ASEE)"
+      - "Journal articles in the field's research journals, beyond conference proceedings"
+    mid:
+      - "Promotion to full professor"
+      - "ASEE Fellow; AERA Fellow for work that reaches education research broadly"
+      - "Editor of an engineering-education journal; a multi-institution study or program"
+    senior:
+      - "National Academy of Engineering or National Academy of Education"
+      - "National Academies committee service on engineering or STEM education"
+  record_norms: >-
+    Research journals (for example, the Journal of Engineering Education, IEEE Transactions
+    on Education, and the European Journal of Engineering Education) carry the record. ASEE
+    and Frontiers in Education papers are refereed proceedings; most promotion committees
+    weigh them below journal articles. Instruments, curricula, and practices adopted at other
+    institutions count as impact.
+  venues: >-
+    The ASEE Annual Conference and its divisions, Frontiers in Education, the Research in
+    Engineering Education Symposium, and the journals above; AERA and the discipline's own
+    education venues for work aimed at education research broadly.
+  funders:
+    - "NSF: engineering-education programs in the Engineering directorate and programs in the Directorate for STEM Education (verify current structure and solicitations)"
+    - "Industry and foundations that fund engineering and computing education"
+    - "Institutional teaching and learning grants as seed funding"
+  metric_conventions:
+    - "Learning outcomes measured with instruments that have validity evidence in engineering or computing settings"
+    - "Persistence, retention, and completion, disaggregated where samples allow"
+    - "Effect sizes with design, sample, and comparison condition"
+    - "Adoption at other institutions and use after funding ends"
+  makeorbreak_archetypes:
+    - "A validated instrument in use at several institutions"
+    - "A multi-institution study showing an effect on learning or persistence"
+    - "A curriculum or practice adopted beyond the home institution, with evidence of use"
+  alignment_frameworks:
+    - "ABET outcomes and accreditation needs of partner programs"
+    - "National Academies reports on engineering and STEM education"
+    - "Funder priorities current on the day the prompt runs"
+  application_leaders:
+    - "Engineering and computing departments and colleges"
+    - "Community colleges and transfer partners"
+    - "Industry partners who hire graduates"
+  convening_forms:
+    - "An NSF-funded workshop that produces a report"
+    - "A special session or workshop at ASEE or Frontiers in Education"
+    - "A Spencer Foundation conference grant for a focused symposium"
+  community_cycle:
+    - "Agenda paper in the Journal of Engineering Education or IEEE Transactions on Education"
+    - "Guest-edited special issue"
+    - "Recurring special session or workshop at ASEE or Frontiers in Education"
+    - "Edited volume or handbook chapters"
+    - "Standing group: an ASEE division or constituent committee, or an AERA special interest group"
+  pitfalls:
+    - "Course evaluation presented as research"
+    - "Single-institution or single-course samples generalized"
+    - "Instruments used without validity evidence for the setting"
+    - "Teaching awards counted as research recognition"
+  verify_note: >-
+    NSF's education programs were reorganized in 2025 and 2026. Check each program and
+    solicitation on the day the prompt runs.
+  reviewed_by: ""
+  reviewed_on: ""
+
+- id: general
+  mid_milestone: "The field's society fellowship"
+  name: Any other field
+  summary: >-
+    For fields without a reviewed profile. The prompt asks the model to identify the field's
+    conventions with sources, and flags each one for the mentor to confirm. Contribute a
+    reviewed profile for your field (CONTRIBUTING.md).
+  agenda_term: research agenda
+  agenda_title_prefix: Research Agenda
+  academy:
+    name: "The field's highest honor"
+    url: ""
+    basis: >-
+      For example, the National Academy of Sciences, the National Academy of Medicine, or
+      the American Academy of Arts and Sciences. Identify the honor that senior people in this field hold, how members are chosen, and
+      the stated criteria, with a link to the official page. Flag it for the mentor to confirm.
+  ladder:
+    early:
+      - "Identify tenure expectations and the early-career awards this field values, with sources"
+    mid:
+      - "Identify the society fellowships and the editorial and leadership roles that mark mid-career standing"
+    senior:
+      - "Identify the academy or honor, and the national service roles that precede it"
+  record_norms: >-
+    Identify what counts as the record in this field (journal articles, books, exhibitions,
+    performances, datasets, software, clinical guidelines) and how promotion committees weigh
+    each. Cite a source.
+  venues: Identify the flagship venues by where the field's leaders publish and serve as editors or chairs.
+  funders:
+    - "Identify the federal, foundation, industry, and state funders that support this field, with current program names and status"
+  metric_conventions:
+    - "Identify the evidence the field accepts for progress and how it is usually measured"
+  makeorbreak_archetypes:
+    - "Propose a result that the field would recognize as decisive within two years, using its own standards of evidence"
+  alignment_frameworks:
+    - "Identify national reports, roadmaps, or priorities for this field"
+  application_leaders:
+    - "Identify the organizations outside academia that use this field's results"
+  convening_forms:
+    - "Identify the convening forms the field uses to set agendas (sponsored workshops, seminars, consensus studies)"
+  community_cycle:
+    - "Adapt the cycle: agenda paper, special issue, recurring workshop or symposium, edited volume or handbook, and a standing group in the field's main society"
+  pitfalls:
+    - "Every pitfall in the engineering and education profiles that applies"
+    - "Field conventions asserted without a source"
+  verify_note: >-
+    This profile has not been reviewed by a senior member of the field. Treat every
+    convention the model identifies as a claim to check with the mentor.
+  reviewed_by: ""
+  reviewed_on: ""

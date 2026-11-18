@@ -1,0 +1,64 @@
+<svg class="board" viewBox="0 0 960 600" role="img" aria-labelledby="{{ label }}-t {{ label }}-d" xmlns="http://www.w3.org/2000/svg">
+  <title id="{{ label }}-t">The whiteboard layout</title>
+  <desc id="{{ label }}-d">Field, area, and topic across the top left. An objective box at the upper right asks what someone could do that they cannot do today. Three numbered challenges below, each with a line for the challenge, for who started it, and for who else is looking; the third says no one is looking. Red-pen notes ask whether the objective is measurable by month 24, whether a product already does challenge two, and why no one is looking at challenge three.</desc>
+  <rect class="b-frame" x="8" y="8" width="944" height="556" rx="12"/>
+  <rect class="b-tray" x="290" y="566" width="380" height="16" rx="4"/>
+  <rect class="b-marker" x="520" y="557" width="70" height="11" rx="5.5"/>
+  <rect class="b-cap" x="582" y="557" width="16" height="11" rx="3"/>
+  <g class="b-ghost" aria-hidden="true">
+    <path d="M120 252 q60 -6 150 3"/>
+  </g>
+  <g class="b-ink">
+    <text x="70" y="98" class="b-h">Field</text>
+    <path class="b-line" d="M168 102 q120 -6 250 1 t120 -2"/>
+    <text x="70" y="150" class="b-h">Area</text>
+    <path class="b-line" d="M160 154 q140 5 260 -2 t100 3"/>
+    <text x="70" y="202" class="b-h">Topic</text>
+    <path class="b-line" d="M168 206 q120 -4 250 2 t110 -3"/>
+
+    <path class="b-box" d="M604 52 q140 -6 288 2 q6 80 -2 166 q-146 6 -288 -3 q-6 -80 2 -165 z"/>
+    <text x="628" y="96" class="b-h">Objective</text>
+    <path class="b-line" d="M628 104 q60 -3 124 1"/>
+    <text x="628" y="146" class="b-s">What can someone do</text>
+    <text x="628" y="180" class="b-s">that they can't today?</text>
+
+    <g transform="translate(62 280)">
+      <circle class="b-num" cx="26" cy="22" r="22"/><text x="18" y="33" class="b-h">1</text>
+      <text x="64" y="34" class="b-h">Challenge</text>
+      <path class="b-line" d="M64 72 q110 -5 230 2"/>
+      <text x="64" y="118" class="b-s">who started this?</text>
+      <path class="b-line" d="M64 142 q100 4 220 -2"/>
+      <text x="64" y="188" class="b-s">who else is looking?</text>
+      <path class="b-line" d="M64 212 q110 -3 226 1"/>
+    </g>
+    <g transform="translate(366 280)">
+      <circle class="b-num" cx="26" cy="22" r="22"/><text x="17" y="33" class="b-h">2</text>
+      <text x="64" y="34" class="b-h">Challenge</text>
+      <path class="b-line" d="M64 72 q120 4 232 -2"/>
+      <text x="64" y="118" class="b-s">who started this?</text>
+      <path class="b-line" d="M64 142 q110 -4 222 1"/>
+      <text x="64" y="188" class="b-s">who else is looking?</text>
+      <path class="b-line" d="M64 212 q100 3 224 -1"/>
+    </g>
+    <g transform="translate(670 280)">
+      <circle class="b-num" cx="26" cy="22" r="22"/><text x="17" y="33" class="b-h">3</text>
+      <text x="64" y="34" class="b-h">Challenge</text>
+      <path class="b-line" d="M64 72 q100 -4 192 2"/>
+      <text x="64" y="118" class="b-s">who started this?</text>
+      <path class="b-line" d="M64 142 q96 3 190 -2"/>
+      <text x="64" y="188" class="b-s">"no one" looking...</text>
+    </g>
+  </g>
+{% if redpen %}
+  <g class="b-red">
+    <text x="612" y="258" class="b-r">measurable by month 24?</text>
+    <path class="b-arrow" d="M716 238 q8 -8 10 -16"/>
+    <path class="b-arrow" d="M720 226 l6 -6 l2 9"/>
+    <text x="384" y="258" class="b-r">a product already?</text>
+    <path class="b-arrow" d="M500 266 q-2 10 -12 18"/>
+    <path class="b-arrow" d="M490 278 l-3 7 l8 -1"/>
+    <ellipse class="b-ring" cx="830" cy="462" rx="97" ry="28" transform="rotate(-3 830 462)"/>
+    <text x="842" y="522" class="b-r">why?</text>
+  </g>
+{% endif %}
+</svg>

@@ -1,0 +1,34 @@
+name: Weekly digest
+
+on:
+  schedule:
+    - cron: "17 11 * * 1"   # Mondays 11:17 UTC; change the hour for your time zone
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python scripts/build.py --digest-only --out site
+      - name: Open this week's digest issue and close last week's
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MENTION: ${{ vars.DIGEST_MENTION }}
+          TRACKER_TZ: ${{ vars.TRACKER_TZ || 'America/New_York' }}
+        run: |
+          title="Agenda digest: week of $(TZ="$TRACKER_TZ" date +%Y-%m-%d)"
+          if [ -n "$MENTION" ]; then printf '\ncc @%s\n' "$MENTION" >> site/digest.md; fi
+          gh label create digest --color BFD4F2 --description "Weekly agenda digest" 2>/dev/null || true
+          for n in $(gh issue list --label digest --state open --json number -q '.[].number'); do
+            gh issue close "$n" --comment "Superseded by this week's digest."
+          done
+          gh issue create --title "$title" --label digest --body-file site/digest.md

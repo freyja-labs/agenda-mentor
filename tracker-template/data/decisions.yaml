@@ -1,0 +1,34 @@
+# SAMPLE DATA (fictional). Asked one at a time, in `order`. status: open | asked | decided | deferred
+- id: D-01
+  order: 1
+  question: Which contribution should the field adopt first, the measure or the classroom findings?
+  status: decided
+  options:
+    - "The measure first; the findings use it"
+    - "The findings first; the measure follows"
+  recommendation: "The measure. Other groups can use it, and it gives the symposium something to compare."
+  answer: "The measure first."
+  asked_on: 2026-11-20
+  decided_on: 2026-11-20
+  links: [T2, G3]
+
+- id: D-02
+  order: 2
+  question: Collaborate with the closest group working on noticing measures, or differentiate?
+  status: asked
+  options:
+    - "Collaborate on a shared item bank"
+    - "Differentiate on AI-supported classrooms"
+  recommendation: "Differentiate, and invite them to the symposium."
+  asked_on: 2026-11-20
+  links: [A-004]
+
+- id: D-03
+  order: 3
+  question: Which year to submit the early-career proposal?
+  status: open
+  options:
+    - "Next cycle, with the pilot findings"
+    - "The cycle after, with the first manuscript accepted"
+  recommendation: "Decide after G2; a submitted manuscript strengthens the proposal."
+  links: [F-03, G2]

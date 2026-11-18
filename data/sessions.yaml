@@ -1,0 +1,43 @@
+# The mentoring year. Months count from the kickoff.
+- when: Month 0
+  title: Kickoff
+  length: 45 minutes
+  purpose: Agree on what the agenda is for, pick the discipline profile, and schedule the whiteboard session.
+  bring: Current CV and the intake.
+  leave_with: A date for the whiteboard session and a third colleague invited to it.
+- when: Month 0
+  title: Whiteboard session
+  length: 75 minutes
+  purpose: Get the faculty member's own statement of the problem onto one board.
+  bring: Nothing written; the board starts blank.
+  leave_with: A photo, and within a day a transcription the faculty member has confirmed.
+- when: Month 1
+  title: Draft and red-team reading
+  length: 60 minutes
+  purpose: Read the draft and the red-team review side by side; mark every claim that needs evidence.
+  bring: Draft, review, and the claims ledger, read in advance.
+  leave_with: Fixes the faculty member owns, and the decisions in the order to ask them.
+- when: Month 1
+  title: Decisions
+  length: 60 minutes
+  purpose: Answer the decisions one at a time and produce version 2, the gates, and the first ninety days.
+  bring: The decision list.
+  leave_with: Version 2 and a seeded tracker.
+- when: Months 2 to 11
+  title: Monthly check-in
+  length: 30 minutes
+  purpose: Gates due or slipping, overdue actions, and at most one new decision.
+  bring: The weekly digest.
+  leave_with: Updated actions and, when needed, one logged decision.
+- when: Month 6
+  title: Mid-year review
+  length: 60 minutes
+  purpose: Scoreboard against targets, the venue plan, and the funding sequence.
+  bring: The dashboard.
+  leave_with: Adjusted targets or sequence, each with a reason in the decision log.
+- when: Month 12
+  title: Annual refresh
+  length: 60 minutes
+  purpose: Run the refresh prompt, rewrite what changed, and plan the next year.
+  bring: Updated CV and tracker.
+  leave_with: A refreshed agenda timed for the annual review.

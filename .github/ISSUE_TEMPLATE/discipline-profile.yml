@@ -1,0 +1,34 @@
+name: Propose a discipline profile
+description: Suggest a profile for a field the portal does not cover yet.
+title: "Profile: "
+labels: [profile]
+body:
+  - type: input
+    id: field
+    attributes:
+      label: Field
+      description: The discipline, as its own faculty would name it.
+    validations:
+      required: true
+  - type: input
+    id: academy
+    attributes:
+      label: Highest recognition
+      description: The academy or honor senior people in the field hold, with a link to its official page.
+    validations:
+      required: true
+  - type: textarea
+    id: ladder
+    attributes:
+      label: Recognition ladder
+      description: Early-career, mid-career, and senior milestones the field values.
+  - type: textarea
+    id: conventions
+    attributes:
+      label: Record, venues, funders, and standards of evidence
+      description: What counts as the record, the flagship venues, funder types, and how the field measures progress. Sources help.
+  - type: input
+    id: reviewer
+    attributes:
+      label: Senior colleague who could review it
+      description: Optional. Profiles need a reviewer before they are marked reviewed.

@@ -1,0 +1,11 @@
+<div class="table-scroll" tabindex="0" role="region" aria-label="Review rubric">
+<table class="rubric">
+  <thead><tr><th scope="col">Criterion</th><th scope="col">1, present</th><th scope="col">3, ready to circulate</th></tr></thead>
+  <tbody>
+  {% for r in rubric %}
+    <tr><th scope="row">{{ r.criterion }}</th><td>{{ r.one }}</td><td>{{ r.three }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="small">Scores: 0 missing, 1 present, 2 sound, 3 ready to circulate.</p>

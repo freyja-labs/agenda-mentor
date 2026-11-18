@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}The original format, reconstructed: {{ cfg.site_name }}{% endblock %}
+{% block description %}The prompt that reproduces the original R&D agenda format in one pass, kept for reference.{% endblock %}
+{% block bodyclass %}page-recon{% endblock %}
+{% block main %}
+<div class="wrap">
+  <article class="prose">
+    <p class="crumb"><a href="../index.html">Prompts</a></p>
+    <h1>The original format, reconstructed</h1>
+    {{ notes|safe }}
+    <p class="note-red">Kept for reference and comparison. For new agendas, use <a href="../index.html">prompts 1 to 6</a>, which add the claims ledger, gap search, metric definitions, capacity limits, and date confidence levels this format lacks.</p>
+  </article>
+  <div class="sheet sheet-static">{{ body|safe }}</div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+# SAMPLE DATA (fictional). stage: planned | drafting | submitted | revision | accepted | published | retarget
+- id: P-01
+  title: What teachers notice when an AI tutor is in the room
+  venue: A field research journal
+  target_date: 2027-02-26
+  stage: drafting
+  flagship: true
+  thrust: [T1]
+  core: true
+  links: [A-002, G2]
+
+- id: P-02
+  title: Validity evidence for a short measure of noticing
+  venue: A measurement journal
+  target_date: 2028-08-31
+  stage: planned
+  flagship: true
+  thrust: [T2]
+  core: true
+  links: [G3]
+
+- id: P-03
+  title: Using classroom video of AI-supported lessons in a methods course
+  venue: A practitioner journal
+  target_date: 2027-06-30
+  stage: planned
+  flagship: false
+  thrust: [BI]
+  core: false

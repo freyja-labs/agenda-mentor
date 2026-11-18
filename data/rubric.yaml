@@ -1,0 +1,38 @@
+# Mentor review rubric. Score each criterion 0-3 on the draft and again on version 2.
+# 0 missing, 1 present, 2 sound, 3 ready to circulate. `one` and `three` describe the ends.
+- id: gap
+  criterion: Problem and gap
+  one: A real problem, with a gap stated broadly or from memory.
+  three: The gap survives a search for products, surveys, and the closest groups, and the nearest work is named beside it.
+- id: record
+  criterion: Fit to the record
+  one: Claims about the faculty member are mostly right but untraced.
+  three: Every claim is in the ledger, traced to the CV or intake, in the right tense.
+- id: makeorbreak
+  criterion: Make-or-break result
+  one: A measurable result with no plan for producing it.
+  three: A measurable result, an engine that exists or is scheduled, and checkpoints at months 6 and 12.
+- id: metrics
+  criterion: Metrics
+  one: Targets without definitions.
+  three: Each metric names its test or design, statistic, unit, baseline, and budget or sample.
+- id: scope
+  criterion: Scope and capacity
+  one: More thrusts and artifacts than the people and money support.
+  three: Thrusts match people and money, community artifacts are gated, and the capacity section adds up.
+- id: competitors
+  criterion: Competitors and collaborators
+  one: Leaders named; the closest groups missing.
+  three: The closest groups are named, with a logged collaborate-or-differentiate decision for each.
+- id: funding
+  criterion: Funding plan
+  one: Programs listed without dates or status.
+  three: Programs current on the agenda's date, each date with a confidence level and source, in a sequence that fits the career stage.
+- id: recognition
+  criterion: Community and recognition path
+  one: Recognition goals without evidence plans.
+  three: The community cycle is gated and dated, and each recognition step names the evidence it needs.
+- id: writing
+  criterion: Writing
+  one: Readable by specialists only, or with two label systems.
+  three: Plain language, one taxonomy, acronyms spelled out, and no inflated claims.

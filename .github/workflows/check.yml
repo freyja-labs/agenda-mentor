@@ -1,0 +1,37 @@
+name: Check
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Validate data, prompts, schema, and links
+        run: python scripts/build.py --check
+
+  tracker-template:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tracker-template
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Validate the sample data and build every output
+        run: |
+          python scripts/build.py --check
+          python scripts/build.py --out site
+          test -s site/index.html && test -s site/calendar.ics && test -s site/digest.md

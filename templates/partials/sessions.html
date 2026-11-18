@@ -1,0 +1,13 @@
+<ol class="sessions">
+{% for s in sessions %}
+  <li>
+    <p class="s-when">{{ s.when }}, {{ s.length }}</p>
+    <h3>{{ s.title }}</h3>
+    <p>{{ s.purpose }}</p>
+    <dl class="facts">
+      <div><dt>Bring</dt><dd>{{ s.bring }}</dd></div>
+      <div><dt>Leave with</dt><dd>{{ s.leave_with }}</dd></div>
+    </dl>
+  </li>
+{% endfor %}
+</ol>

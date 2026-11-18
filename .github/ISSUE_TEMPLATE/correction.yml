@@ -1,0 +1,31 @@
+name: Report a correction
+description: Something on the site is wrong or out of date.
+title: "Correction: "
+labels: [correction]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: The page's address, or the file in the repository.
+    validations:
+      required: true
+  - type: textarea
+    id: says
+    attributes:
+      label: What it says
+    validations:
+      required: true
+  - type: textarea
+    id: should
+    attributes:
+      label: What it should say
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: A link to the official page or document.
+    validations:
+      required: true

@@ -1,0 +1,84 @@
+# SAMPLE DATA. Every person, institution, sponsor, and date in data/ is fictional.
+# Replace these files with the output of prompt 5 (prompts/05-tracker-seed.md).
+# Health values: on_track | at_risk | off_track | not_started | done
+
+title: Noticing at Scale
+subtitle: Research agenda tracker (sample data)
+owner: Rivera
+source_doc: "Research Agenda — Jordan Rivera (fictional sample, version 2)"
+review_doc: ""   # path to the red-team review in this repository, for example docs/red-team.md
+timezone: America/New_York
+
+clock:
+  month0: 2026-11-01
+  horizon_months: 24
+  makeorbreak_due: 2028-11-30
+  target_years: [2028, 2031]
+
+repo:
+  slug: your-account/your-tracker
+  branch: main
+  published: false    # true once the repository exists, so dashboard IDs link to their lines
+
+calendar:
+  name: "Research agenda: Noticing at Scale"
+  feed_url: ""
+
+thrusts:
+  - id: T1
+    name: How teachers notice student thinking in AI-supported lessons
+    challenge: GC1
+    health: on_track
+    where: "Pilot classroom videos from two partner schools are coded; the coding scheme reached agreement on the second round."
+    next: "First journal manuscript to a field journal by Feb 26, 2027 (P-01)."
+    origin: "Whiteboard challenge 1."
+    people: [Doctoral student (to recruit)]
+  - id: T2
+    name: A measure of noticing with validity evidence
+    challenge: GC2
+    health: at_risk
+    where: "Item drafts exist; no cognitive interviews yet, and no funding for the field test."
+    next: "Cognitive interviews with eight teachers by Mar 31, 2027 (A-004); seed-grant proposal (F-02)."
+    origin: "Whiteboard challenge 2, narrowed after the red-team review."
+    people: []
+  - id: AL
+    name: "Application lens: partner districts"
+    challenge: Application
+    health: at_risk
+    where: "One district has agreed in principle; no data-sharing agreement is signed."
+    next: "Data-sharing agreement drafted with the district's research office (A-003)."
+    origin: "Draft thrust 4, kept as a lens."
+    people: []
+  - id: BI
+    name: "Broader impacts: teacher preparation"
+    challenge: Broader impacts
+    health: on_track
+    where: "The methods course already uses the pilot video clips."
+    next: "Module write-up for the field's practitioner journal (P-03)."
+    origin: "Draft thrust 5."
+    people: []
+  - id: X
+    name: Cross-cutting (agenda, funding, convening, capacity)
+    challenge: Program
+    health: on_track
+    where: "Version 2 passed the verification checklist on Nov 30, 2026."
+    next: "Monthly mentor check-ins; mid-year review in June 2027."
+    origin: "Program items from the draft."
+    people: []
+
+grand_challenges:
+  - id: GC1
+    name: Teacher noticing when software also responds to students
+    science_question: "S1: what teachers notice about student thinking when an AI tutor is in the room"
+  - id: GC2
+    name: Measuring noticing at scale
+    science_question: "S2: can a short measure of noticing earn validity evidence across districts"
+  - id: GC3
+    name: Preparing teachers for AI-supported classrooms
+    science_question: "S3: which preparation experiences change what new teachers notice"
+
+glossary:
+  - [AI, Artificial intelligence]
+  - [GC / S, Grand challenge / science question]
+  - [IRB, Institutional review board]
+  - [RPP, Research-practice partnership]

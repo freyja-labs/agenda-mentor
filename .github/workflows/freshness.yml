@@ -1,0 +1,54 @@
+name: Profile freshness
+
+on:
+  schedule:
+    - cron: "23 13 1 * *"   # the first of each month, 13:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  stale-profiles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: List profiles without a review in the last twelve months
+        id: scan
+        run: |
+          python - <<'EOF' > stale.md
+          import datetime as dt, yaml
+          today = dt.date.today()
+          rows = []
+          for p in yaml.safe_load(open("data/disciplines.yaml", encoding="utf-8")):
+              on = str(p.get("reviewed_on") or "")
+              try:
+                  age = (today - dt.date.fromisoformat(on)).days
+              except ValueError:
+                  age = None
+              if age is None or age > 365:
+                  last = f"{p.get('reviewed_by')}, {on}" if p.get("reviewed_by") else "never"
+                  rows.append(f"| `{p['id']}` | {p['name']} | {last} |")
+          if rows:
+              print("These discipline profiles need a review by a senior colleague in the field (CONTRIBUTING.md, step 4).\n")
+              print("| Profile | Name | Last review |\n|---|---|---|")
+              print("\n".join(rows))
+          EOF
+          if [ -s stale.md ]; then echo "found=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Open or update the review issue
+        if: steps.scan.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create profile-review --color FBEFEE --description "Discipline profile needs review" 2>/dev/null || true
+          n=$(gh issue list --label profile-review --state open --json number -q '.[0].number')
+          if [ -n "$n" ]; then
+            gh issue edit "$n" --body-file stale.md
+          else
+            gh issue create --title "Discipline profiles due for review" --label profile-review --body-file stale.md
+          fi

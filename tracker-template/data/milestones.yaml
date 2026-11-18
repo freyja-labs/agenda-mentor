@@ -1,0 +1,63 @@
+# SAMPLE DATA (fictional). Gates toward the month-24 make-or-break result, then community
+# and recognition milestones. track: gate | community | recognition
+- id: G0
+  title: Version 2 ready for circulation
+  date: 2026-11-30
+  date_precision: day
+  track: gate
+  status: done
+  thrusts: [X]
+  criteria:
+    - "Every row of the claims ledger reads supported"
+    - "One taxonomy: GC1-GC3 with S1-S3 nested"
+
+- id: G1
+  title: Data-sharing agreement signed with the partner district
+  date: 2027-03-31
+  date_precision: day
+  track: gate
+  status: open
+  thrusts: [AL, T2]
+  criteria:
+    - "Agreement signed by the district's research office"
+    - "IRB approval covers the field test"
+
+- id: G2
+  title: First manuscript under review in a field journal
+  date: 2027-02-26
+  date_precision: day
+  track: gate
+  status: in_progress
+  thrusts: [T1]
+  criteria:
+    - "Submitted, with the coding scheme and agreement statistics in the supplement"
+
+- id: G3
+  title: Measure field-tested in two districts
+  date: 2028-05-31
+  date_precision: day
+  track: gate
+  status: not_started
+  thrusts: [T2]
+  criteria:
+    - "At least 300 teachers; reliability and internal-structure evidence reported"
+
+- id: C1
+  title: Symposium at the field's annual meeting (gated on G2 acceptance)
+  date: 2028-04-01
+  date_precision: month
+  track: community
+  status: not_started
+  thrusts: [X]
+  criteria:
+    - "Two outside groups present on noticing in AI-supported classrooms"
+
+- id: R1
+  title: Tenure dossier
+  date: 2030-08-01
+  date_precision: year
+  track: recognition
+  status: not_started
+  thrusts: [X]
+  criteria:
+    - "Three or more journal articles from the agenda; one funded study as principal investigator"

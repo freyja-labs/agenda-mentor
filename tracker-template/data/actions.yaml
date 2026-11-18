@@ -1,0 +1,50 @@
+# SAMPLE DATA (fictional). status: open | in_progress | waiting | blocked | done | dropped
+- id: A-001
+  title: Finish the claims ledger for version 2
+  due: 2026-11-30
+  thrust: [X]
+  owner: Rivera
+  status: done
+  priority: high
+  done_when: "Every ledger row reads supported"
+  links: [G0]
+
+- id: A-002
+  title: Submit the noticing manuscript to a field journal
+  due: 2027-02-26
+  thrust: [T1]
+  owner: Rivera
+  status: in_progress
+  priority: high
+  done_when: "Submission confirmation received"
+  links: [G2, P-01]
+
+- id: A-003
+  title: Draft the data-sharing agreement with the district research office
+  due: 2027-01-29
+  thrust: [AL]
+  owner: Rivera
+  status: open
+  priority: high
+  done_when: "Draft sent to the district with the IRB protocol attached"
+  links: [G1]
+
+- id: A-004
+  title: Run cognitive interviews with eight teachers
+  due: 2027-03-31
+  thrust: [T2]
+  owner: Rivera
+  status: open
+  priority: normal
+  done_when: "Eight interviews coded; item revisions logged"
+  links: [G3, D-02]
+
+- id: A-005
+  title: Ask the department about a protected research day in fall 2027
+  due: 2027-02-15
+  thrust: [X]
+  owner: Rivera
+  status: waiting
+  priority: normal
+  done_when: "A written answer from the chair"
+  links: [R-01]

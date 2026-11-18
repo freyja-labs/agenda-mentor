@@ -1,0 +1,67 @@
+# The path from a blank board to a tracked agenda. The order is the method.
+- id: intake
+  title: Gather the record
+  who: Faculty member
+  time: 30 minutes
+  does: >-
+    Collect the current CV (your own file, not a public bio) and fill in a one-page intake:
+    funding with end dates, the people who work with you, your teaching and service load,
+    what you want to be known for, and anything that must stay out of the document.
+  output: CV and intake
+  prompt: ""
+- id: whiteboard
+  title: Run the whiteboard session
+  who: Faculty member, facilitator, and at least one more colleague
+  time: 75 minutes
+  does: >-
+    Put the field, the area, the topic, the objective, and three challenges on one board,
+    each with the works that define it and the people already working on it. Photograph the
+    board, transcribe it, and have the faculty member confirm the transcription.
+  output: Photo and confirmed transcription
+  prompt: "01-whiteboard-transcription"
+- id: draft
+  title: Draft the agenda
+  who: Faculty member or facilitator
+  time: 1 hour, plus reading
+  does: >-
+    Run the drafting prompt with the CV, the transcription, the intake, and the discipline
+    profile. The draft carries its own claims ledger and a list of open decisions.
+  output: Draft agenda
+  prompt: "02-draft-agenda"
+- id: redteam
+  title: Red-team the draft
+  who: Mentor, or the faculty member before the mentoring session
+  time: 1 hour, plus reading
+  does: >-
+    Test the draft the way the field's toughest reviewer and a program officer would:
+    claims against the record, gaps against the literature and the market, metrics against
+    their definitions, scope against capacity, and dates against their sources.
+  output: Review with fixes and decisions
+  prompt: "03-red-team"
+- id: decide
+  title: Decide, then revise
+  who: Faculty member with the mentor
+  time: 60-minute session
+  does: >-
+    Answer the decisions one at a time, then produce version 2 with a change log, a clean
+    claims ledger, dated gates, and the first ninety days of actions.
+  output: Version 2, gates, and first actions
+  prompt: "04-decisions-and-v2"
+- id: track
+  title: Track it
+  who: Faculty member; mentor checks in monthly
+  time: 15 minutes a week
+  does: >-
+    Seed the tracker from version 2. It builds a dashboard, a calendar feed, and a weekly
+    digest from plain files, so slipping gates surface before the annual review does.
+  output: Tracker repository
+  prompt: "05-tracker-seed"
+- id: refresh
+  title: Refresh every year
+  who: Faculty member with the mentor
+  time: 60-minute session
+  does: >-
+    A month before the annual review, compare the scoreboard with the targets, re-check the
+    landscape and the claims, decide what changes, and rewrite only what changed.
+  output: Refreshed agenda and next year's decisions
+  prompt: "06-annual-refresh"

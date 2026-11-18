@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ cfg.site_name }}{% endblock %}</title>
+<meta name="description" content="{% block description %}{{ cfg.tagline }}{% endblock %}">
+<link rel="preload" href="{{ root }}assets/fonts/literata-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ root }}assets/fonts/atkinson-hyperlegible-next-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{ root }}assets/css/site.css">
+<meta name="theme-color" content="#F7F9FA">
+<link rel="icon" href="{{ root }}assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body class="{% block bodyclass %}{% endblock %}">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="wordmark" href="{{ root }}index.html"><span class="wm-dot" aria-hidden="true"></span>{{ cfg.site_name }}</a>
+    <nav aria-label="Site">
+      <ul class="nav">
+        {% for n in nav %}
+        <li><a href="{{ root }}{{ n.slug }}/index.html"{% if current == n.slug %} aria-current="page"{% endif %}>{{ n.nav or n.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+{% block main %}{% endblock %}
+</main>
+<footer class="site-foot">
+  <div class="wrap foot-row">
+    <p>{{ cfg.site_name }} is built from plain files on GitHub. <a href="{{ repo_url }}">Source and issues</a>.{% if cfg.host_note %} {{ cfg.host_note }}{% endif %}</p>
+    <p>Nothing you type into the prompt builder leaves your browser.</p>
+  </div>
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

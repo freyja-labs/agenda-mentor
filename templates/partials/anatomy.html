@@ -1,0 +1,15 @@
+<div class="table-scroll" tabindex="0" role="region" aria-label="Agenda sections">
+<table class="anatomy">
+  <thead><tr><th scope="col">Section</th><th scope="col">Contains</th><th scope="col">Ready when</th><th scope="col">Typical failure</th></tr></thead>
+  <tbody>
+  {% for a in anatomy %}
+    <tr>
+      <th scope="row">{{ a.title }}<code>{{ a.key }}</code></th>
+      <td>{{ a.contains }}</td>
+      <td>{{ a.bar }}</td>
+      <td class="red-cell">{{ a.failure }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>

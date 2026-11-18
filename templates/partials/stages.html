@@ -1,0 +1,14 @@
+<ol class="path">
+{% for s in stages %}
+  <li>
+    <h3>{{ s.title }}</h3>
+    <p>{{ s.does }}</p>
+    <dl class="facts">
+      <div><dt>Who</dt><dd>{{ s.who }}</dd></div>
+      <div><dt>Time</dt><dd>{{ s.time }}</dd></div>
+      <div><dt>Output</dt><dd>{{ s.output }}</dd></div>
+      {% if s.prompt %}<div><dt>Prompt</dt><dd><a href="{{ root }}prompts/index.html#p{{ s.prompt }}">{{ prompts[s.prompt].n }}. {{ prompts[s.prompt].title }}</a></dd></div>{% endif %}
+    </dl>
+  </li>
+{% endfor %}
+</ol>

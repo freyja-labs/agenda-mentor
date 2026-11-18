@@ -1,0 +1,31 @@
+# SAMPLE DATA (fictional). stage: idea | shaping | submitted | pending | active | ended | declined | pass
+- id: F-01
+  title: Start-up package
+  sponsor: Example State University
+  amount_k: 60
+  share_k: 60
+  start: 2024-08-15
+  end: 2027-08-31
+  stage: active
+  thrust: [T1, X]
+  core: true
+  source: record
+
+- id: F-02
+  title: Measure development seed grant
+  sponsor: Example Foundation
+  amount_k: 50
+  share_k: 50
+  stage: shaping
+  thrust: [T2]
+  core: true
+  next_date: 2027-03-15
+  next_step: "Two-page narrative to the mentor by Feb 15 (A-004 feeds it)"
+
+- id: F-03
+  title: Early-career award proposal
+  sponsor: A federal early-career program (verify the current solicitation)
+  stage: idea
+  thrust: [T1, T2, BI]
+  core: true
+  next_step: "Decide the submission year after G2 (D-03)"

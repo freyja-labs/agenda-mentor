@@ -1,0 +1,75 @@
+name: Build tracker
+
+on:
+  push:
+    branches: [main]
+    paths: ["data/**", "scripts/**", "site_src/**", "requirements.txt", ".github/workflows/build.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Validate data
+        run: python scripts/build.py --check
+      - name: Build dashboard, calendar, and digest
+        run: python scripts/build.py --out site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site
+      # Optional: publish calendar.ics to a secret gist for a stable subscription URL.
+      # Set repository variable CAL_GIST_ID and secret GIST_TOKEN (a token with the gist scope).
+      - name: Publish calendar feed to gist
+        if: ${{ vars.CAL_GIST_ID != '' }}
+        env:
+          GH_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: ${{ vars.CAL_GIST_ID }}
+        run: |
+          jq -n --rawfile c site/calendar.ics '{files: {"calendar.ics": {content: $c}}}' \
+            | gh api -X PATCH "/gists/${GIST_ID}" --input - > /dev/null
+          echo "Feed: https://gist.githubusercontent.com/${{ github.repository_owner }}/${GIST_ID}/raw/calendar.ics"
+
+  # Optional: the dashboard on GitHub Pages, behind a password. Pages sites are public even
+  # when the repository is private, so this job publishes one file: the dashboard encrypted
+  # with the DASHBOARD_PASSWORD secret (scripts/protect.py). data.json, digest.md, and
+  # calendar.ics never reach Pages. To turn it on: choose "GitHub Actions" as the Pages source,
+  # add the DASHBOARD_PASSWORD secret (a long passphrase), and set variable DEPLOY_PAGES to true.
+  pages:
+    if: ${{ vars.DEPLOY_PAGES == 'true' }}
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site
+      - name: Encrypt the dashboard (fails without the password, so nothing unencrypted ships)
+        env:
+          DASHBOARD_PASSWORD: ${{ secrets.DASHBOARD_PASSWORD }}
+        run: python scripts/protect.py --src site/index.html --out pages/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: pages
+      - id: deploy
+        uses: actions/deploy-pages@v4
