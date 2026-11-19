@@ -18,7 +18,7 @@ import re
 import shutil
 import sys
 from pathlib import Path
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 
 import markdown
 import yaml
@@ -43,6 +43,27 @@ PROFILE_REQUIRED = ["id", "name", "summary", "agenda_term", "agenda_title_prefix
                     "pitfalls", "verify_note"]
 
 PAGES = ["method", "whiteboard", "prompts", "profiles", "mentors", "verify", "track", "about"]
+
+# Response headers for the Cloudflare static assets the site is served from (_headers).
+# The pages run no inline script or style and load nothing from another origin, so the
+# policy can be strict; keep it that way. form-action 'none': the builder's form never
+# submits, so the answers typed into it can never reach a URL or a server log.
+HEADERS = """\
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cross-Origin-Opener-Policy: same-origin
+/assets/fonts/*
+  Cache-Control: public, max-age=2592000
+"""
+
+# Internal links are written as .../index.html in the templates; the build points them
+# at the directory (.../), the form Cloudflare serves without a redirect.
+INDEX_LINK = re.compile(r'href="((?![a-z]+:|#)[^"#]*?)index\.html(?=["#])')
 
 # Facultory's app honors ?next= only for an in-app route like '#/agenda'; anything else
 # is ignored there, so a malformed value here would send visitors to the dashboard.
@@ -164,6 +185,15 @@ def check(cfg, profiles, prompts, anatomy) -> list[str]:
         errors.append(f"schema sections {schema_keys} do not match data/anatomy.yaml keys {anatomy_keys}")
     if not re.fullmatch(r"[\w.-]+/[\w.-]+", str(cfg.get("repo", ""))):
         errors.append("config.yaml: repo must be 'owner/name'")
+    site_url = str(cfg.get("site_url", ""))
+    if not re.fullmatch(r"https://[a-z0-9.-]+(?::\d+)?/(?:[A-Za-z0-9._~-]+/)*", site_url):
+        errors.append("config.yaml: site_url must be an https address ending in '/', such as https://mentor.freyjalabs.com/")
+    elif schema.get("$id") != f"{site_url}data/agenda.schema.json":
+        errors.append(f"schema $id must be {site_url}data/agenda.schema.json, where the build publishes it")
+    pub = cfg.get("publisher")
+    if not (isinstance(pub, dict) and 0 < len(str(pub.get("name", "")).strip()) <= 60
+            and re.fullmatch(r"https://[a-z0-9.-]+(?:/\S*)?", str(pub.get("url", "")))):
+        errors.append("config.yaml: publisher needs a name (1 to 60 characters) and an https url")
     fac = cfg.get("facultory")
     if not isinstance(fac, dict):
         errors.append("config.yaml: the facultory block is missing")
@@ -182,14 +212,21 @@ def check(cfg, profiles, prompts, anatomy) -> list[str]:
     return errors
 
 
-def check_links(out: Path) -> list[str]:
+def check_links(out: Path, base_path: str = "/") -> list[str]:
     errors = []
     for page in out.rglob("*.html"):
         text = page.read_text(encoding="utf-8")
         for href in re.findall(r'(?:href|src)="([^"#?]+)(?:[#?][^"]*)?"', text):
             if re.match(r"^(https?:|mailto:|data:)", href):
                 continue
-            target = (page.parent / href).resolve()
+            # The 404 page links from the site root, because it is served at any depth.
+            if href.startswith("/"):
+                if not href.startswith(base_path):
+                    errors.append(f"{page.relative_to(out)}: link '{href}' is outside the site's path {base_path}")
+                    continue
+                target = (out / href[len(base_path):]).resolve()
+            else:
+                target = (page.parent / href).resolve()
             if target.is_dir():
                 target = target / "index.html"
             if not target.exists():
@@ -231,14 +268,23 @@ def build(out: Path, check_only: bool) -> int:
     build_dir.mkdir(parents=True)
     shutil.copytree(ASSETS, build_dir / "assets")
 
-    def write(rel: str, template: str, **ctx):
-        depth = rel.count("/")
-        root = "../" * depth
+    site_url = cfg["site_url"]
+    base_path = urlparse(site_url).path
+    canonicals: list[str] = []
+
+    def write(rel: str, template: str, root: str | None = None, indexable: bool = True, **ctx):
+        if root is None:
+            root = "../" * rel.count("/")
+        canonical = site_url + rel.removesuffix("index.html") if indexable else None
         page_html = env.get_template(template).render(
-            cfg=cfg, nav=nav, root=root, repo_url=repo_url, fac=fac, current=ctx.get("slug", ""), **ctx)
+            cfg=cfg, nav=nav, root=root, repo_url=repo_url, fac=fac, current=ctx.get("slug", ""),
+            canonical=canonical, **ctx)
+        page_html = INDEX_LINK.sub(lambda m: f'href="{m.group(1) or "./"}', page_html)
         target = build_dir / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(page_html, encoding="utf-8")
+        if canonical:
+            canonicals.append(canonical)
 
     includes = {
         "stages": lambda root: env.get_template("partials/stages.html").render(stages=stages, prompts=prompt_by_id, root=root),
@@ -298,9 +344,19 @@ def build(out: Path, check_only: bool) -> int:
     (build_dir / "data" / "disciplines.json").write_text(
         json.dumps([{**p, "block": profile_block(p)} for p in profiles], ensure_ascii=False, indent=1), encoding="utf-8")
     shutil.copy(ROOT / "schema" / "agenda.schema.json", build_dir / "data" / "agenda.schema.json")
-    (build_dir / ".nojekyll").write_text("", encoding="utf-8")
 
-    link_errors = check_links(build_dir)
+    # Served at any depth for any address that matches no file, so it links from the root.
+    write("404.html", "404.html", root=base_path, indexable=False, slug="")
+
+    # Hosting files: Cloudflare's response headers, and what search engines read.
+    (build_dir / "_headers").write_text(HEADERS, encoding="utf-8")
+    (build_dir / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {site_url}sitemap.xml\n", encoding="utf-8")
+    (build_dir / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "".join(f"  <url><loc>{u}</loc></url>\n" for u in sorted(canonicals))
+        + "</urlset>\n", encoding="utf-8")
+
+    link_errors = check_links(build_dir, base_path)
     if check_only:
         shutil.rmtree(build_dir)
     if link_errors:

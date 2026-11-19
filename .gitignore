@@ -1,5 +1,7 @@
 _site/
 .check_site/
+.wrangler/
+node_modules/
 __pycache__/
 *.pyc
 .DS_Store

@@ -2,7 +2,7 @@
 
 A mentorship portal for faculty building a five-year research agenda: a method that starts at a whiteboard, six prompts that draft and then red-team the agenda, discipline profiles that carry each field's conventions, a mentor guide with a review rubric, a verification checklist, and a tracker template that keeps the agenda in front of the faculty member every week.
 
-The site is built from the plain files in this repository and published with GitHub Pages. The prompt builder runs in the visitor's browser; nothing typed into it is sent anywhere.
+Agenda Mentor is a [Freyja Labs](https://freyjalabs.com) project, served at **https://mentor.freyjalabs.com** by Cloudflare. The site is built from the plain files in this repository. The prompt builder runs in the visitor's browser; nothing typed into it is sent anywhere.
 
 ## Layout
 
@@ -23,24 +23,41 @@ The site is built from the plain files in this repository and published with Git
 pip install -r requirements.txt
 python scripts/build.py --check     # data, prompts, schema, and every internal link
 python scripts/build.py             # writes _site/
-python -m http.server -d _site 8000
+npx wrangler dev                    # serves _site/ the way Cloudflare does, with _headers and the 404 page
 ```
+
+`python -m http.server -d _site 8000` also works for a quick look, without the response headers or the 404 page.
 
 The build fails on a missing profile field, an unknown prompt placeholder, unbalanced `{{#if}}` blocks, prompt numbering out of order, a schema that disagrees with `data/anatomy.yaml` or with the builder's intake fields, a malformed `facultory` block in `config.yaml`, or a broken internal link.
 
 ## Publish
 
-1. Settings, Pages: set the source to **GitHub Actions**.
-2. Push to `main`. The `pages` workflow builds the site and deploys it.
-3. Set `repo` in `config.yaml` if the repository is not `ucf-draco-mike/agenda-mentor`; the site links to its own source files there.
-4. The `facultory` block in `config.yaml` sets where the "keep it in Facultory" links point: the plan the signup form selects, the label it records under "How did you hear about Facultory?", and the page that opens after sign-in. The build checks each value.
+The site is the Cloudflare Worker `agenda-mentor`, static assets only (`wrangler.jsonc`), deployed the way `freyja-labs/freyjalabs-site` is: a git-connected Workers Build runs on every push to `main`. There is no GitHub Actions deploy.
 
-GitHub Pages sites are public, including those built from private repositories. Everything in `_site/` is meant to be public: the method, the prompts, and the profiles. Keep real agendas, intakes, and trackers in private repositories, never here.
+One-time setup, in the Freyja Labs Cloudflare account:
+
+1. **Workers & Pages → Create → Import a repository**, and choose `freyja-labs/agenda-mentor`.
+2. Build settings:
+   - Build command: `pip install -r requirements.txt && python scripts/build.py --out _site`
+   - Deploy command: `npx wrangler deploy`
+   - Root directory: `/`, production branch: `main`. `.python-version` pins Python 3.12, the version CI uses.
+3. **Settings → Domains & Routes → Add custom domain**: `mentor.freyjalabs.com`. Cloudflare creates the proxied DNS record and the certificate.
+4. Leave Cloudflare Web Analytics' automatic setup off for this hostname. The About page says the site runs no analytics, and the content security policy in `_headers` blocks the injected script.
+
+The build runs every check before it writes anything, so a commit that fails `--check` never deploys. Builds of other branches get a preview address on `workers.dev`; the canonical links on every page point search engines at `mentor.freyjalabs.com`.
+
+`config.yaml` holds what changes per deployment:
+
+- `site_url`: the address the site is served at. Canonical links, `sitemap.xml`, the 404 page, and the schema's `$id` are built from it, and the build checks that the schema agrees.
+- `publisher`: named in the footer and on the About page.
+- `repo`: the GitHub repository the site links to for its source files and issues.
+- `facultory`: where the "keep it in Facultory" links point: the plan the signup form selects, the label it records under "How did you hear about Facultory?", and the page that opens after sign-in. The build checks each value.
+
+Everything in `_site/` is public: the method, the prompts, and the profiles. Keep real agendas, intakes, and trackers in private repositories, never here.
 
 ## Workflows
 
-- `pages.yml` builds and deploys on every push to `main`.
-- `check.yml` runs the same validation on pull requests, and builds the tracker template against its sample data.
+- `check.yml` runs the build's validation on pull requests, and builds the tracker template against its sample data.
 - `freshness.yml` runs on the first of each month and opens (or updates) one issue listing profiles that no senior colleague has reviewed in the last twelve months.
 
 ## Contributing
