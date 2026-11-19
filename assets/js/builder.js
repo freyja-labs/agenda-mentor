@@ -151,16 +151,59 @@
     document.body.removeChild(ta);
   }
 
-  document.getElementById("download").addEventListener("click", function () {
-    var blob = new Blob([lastText], { type: "text/markdown;charset=utf-8" });
+  function save(text, type, name) {
     var a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "prompt-" + String(lastPrompt.n).padStart(2, "0") + "-" + lastPrompt.id.replace(/^\d+-/, "") + ".md";
+    a.href = URL.createObjectURL(new Blob([text], { type: type }));
+    a.download = name;
     document.body.appendChild(a);
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 0);
-    say("Downloaded " + a.download + ".");
+    return name;
+  }
+
+  document.getElementById("download").addEventListener("click", function () {
+    var name = "prompt-" + String(lastPrompt.n).padStart(2, "0") + "-" + lastPrompt.id.replace(/^\d+-/, "") + ".md";
+    say("Downloaded " + save(lastText, "text/markdown;charset=utf-8", name) + ".");
   });
+
+  // "Download your answers": the form as an agenda-mentor/1 file, the format Facultory's
+  // Import JSON reads. It is built here and saved to this computer; nothing is sent.
+  var CAREER = { "assistant professor": "assistant", "associate professor": "associate", "full professor": "full" };
+  function intIn(s, lo, hi, dflt) {
+    var n = parseInt(s, 10);
+    return isNaN(n) ? dflt : Math.min(hi, Math.max(lo, n));
+  }
+  function portable(raw) {
+    var p = profileById(raw.profile);
+    var doc = {
+      format: PORTAL.format,
+      title: p.agenda_title_prefix + (raw.name ? " — " + raw.name : ""),
+      owner: { name: raw.name || "", career_stage: CAREER[raw.career_stage] || "other" },
+      discipline: p.id,
+      dated: /^\d{4}-\d{2}-\d{2}$/.test(raw.date_iso || "") ? raw.date_iso : today(),
+      horizon_years: intIn(raw.horizon_years, 1, 10, 5),
+      makeorbreak_months: intIn(raw.makeorbreak_months, 6, 48, 24),
+      sections: {}
+    };
+    ["title", "department", "institution"].forEach(function (k) { if (raw[k]) doc.owner[k] = raw[k]; });
+    if (raw.field) doc.field = raw.field;
+    if (raw.whiteboard) doc.whiteboard = raw.whiteboard;
+    var intake = {};
+    PORTAL.intakeKeys.forEach(function (k) { if (raw[k]) intake[k] = raw[k]; });
+    if (Object.keys(intake).length) doc.intake = intake;
+    return doc;
+  }
+  var exportRow = document.getElementById("export-row");
+  var exportBtn = document.getElementById("export");
+  var exportStatus = document.getElementById("export-status");
+  if (exportRow && exportBtn) {
+    exportRow.hidden = false;
+    exportBtn.addEventListener("click", function () {
+      var doc = portable(readForm());
+      var name = save(JSON.stringify(doc, null, 2) + "\n", "application/json", "agenda-answers-" + doc.dated + ".json");
+      if (exportStatus) exportStatus.textContent = "Saved " + name + ".";
+    });
+  }
 
   var armed = null;
   clearBtn.addEventListener("click", function () {

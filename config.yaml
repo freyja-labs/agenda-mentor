@@ -6,3 +6,15 @@ repo: ucf-draco-mike/agenda-mentor
 branch: main
 # Shown in the footer. Leave empty for no institution.
 host_note: ""
+# Facultory, the hosted place to keep an agenda. The build composes the sign-up and
+# sign-in links from these values. They name this site as the source and carry
+# nothing a visitor typed.
+facultory:
+  url: https://facultory.com
+  # The page the links open after sign-in: the Research Agenda tool.
+  next: "#/agenda"
+  # The plan the signup form selects first: the least expensive plan that includes
+  # Research Agenda. Scheduling does not include it.
+  plan: noai
+  # Fills in "How did you hear about Facultory?", so signups from here are counted.
+  heard: Agenda Mentor

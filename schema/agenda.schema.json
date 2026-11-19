@@ -27,6 +27,20 @@
     "horizon_years": { "type": "integer", "minimum": 1, "maximum": 10, "default": 5 },
     "makeorbreak_months": { "type": "integer", "minimum": 6, "maximum": 48, "default": 24 },
     "whiteboard": { "type": "string", "description": "The confirmed transcription from prompt 1." },
+    "field": { "type": "string", "description": "The field in the faculty member's own words, as they would describe it to a program officer." },
+    "intake": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The intake answers the draft prompt uses. They are the faculty member's private notes: a tool that shows an agenda to a mentor leaves them out.",
+      "properties": {
+        "wants": { "type": "string", "description": "What the faculty member wants to be known for." },
+        "funding": { "type": "string", "description": "Current funding, with end dates." },
+        "people": { "type": "string", "description": "People who work with them, and on what." },
+        "load": { "type": "string", "description": "Teaching and service load." },
+        "context": { "type": "string", "description": "Institutional context: clusters, centers, partners, regional assets." },
+        "constraints": { "type": "string", "description": "Names, affiliations, or sponsors to leave out." }
+      }
+    },
     "sections": {
       "type": "object",
       "additionalProperties": false,
