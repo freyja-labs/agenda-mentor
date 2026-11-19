@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ucf-draco-mike/agenda-mentor/schema/agenda.schema.json",
+  "$id": "https://ucf-draco-mike.github.io/agenda-mentor/data/agenda.schema.json",
   "title": "Research agenda",
   "description": "One research agenda in the Agenda Mentor format. Section keys match data/anatomy.yaml; each section holds Markdown. Tools that store agendas use the same keys, so an agenda can move between them.",
   "type": "object",
