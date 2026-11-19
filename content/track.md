@@ -36,6 +36,8 @@ python scripts/build.py                            # rebuild site/ locally
 
 Never delete an item; set its status to `dropped`, so the history stays. IDs never change, because they double as calendar identifiers.
 
-## Without GitHub
+## Keep it in Facultory instead
 
-Faculty who would rather not run a repository can keep the same agenda, claims ledger, decisions, and gates in a hosted tool. The section keys and the ledger format match [`schema/agenda.schema.json`]({{repo_url}}/blob/main/schema/agenda.schema.json), so an agenda can move between the two.
+Faculty who would rather not run a repository can keep the agenda in Facultory. Its claims ledger and decision log use the tracker's fields, both defined in [`schema/agenda.schema.json`]({{repo_url}}/blob/main/schema/agenda.schema.json), and the mentor gets a review link in place of repository access.
+
+[[facultory]]

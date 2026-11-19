@@ -54,6 +54,7 @@
   does: >-
     Seed the tracker from version 2. It builds a dashboard, a calendar feed, and a weekly
     digest from plain files, so slipping gates surface before the annual review does.
+    Faculty who would rather not run a repository keep version 2 in Facultory instead.
   output: Tracker repository
   prompt: "05-tracker-seed"
 - id: refresh

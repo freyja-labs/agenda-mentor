@@ -44,7 +44,7 @@ a { color: var(--marker); text-decoration-thickness: 1px; text-underline-offset:
 a:hover { color: var(--marker-deep); text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--marker); outline-offset: 2px; border-radius: 2px; }
 code { font: 0.86em/1 var(--mono); background: var(--marker-wash); padding: 0.12em 0.32em; border-radius: 3px; }
-pre { font: 0.86rem/1.55 var(--mono); }
+pre { font: 0.86rem/1.55 var(--mono); overflow-x: auto; }
 
 .skip { position: absolute; left: -999px; top: 0; background: var(--paper); padding: 0.5rem 1rem; z-index: 10; }
 .skip:focus { left: 1rem; top: 1rem; }
@@ -214,6 +214,23 @@ pre.block { white-space: pre-wrap; background: var(--paper); border: 1px solid v
 .sheet-static h2 { font-size: 1.25rem; }
 .sheet-static h3 { font-size: 1.05rem; }
 
+/* Facultory handoff: the page's own voice, ruled rows like the path, no box around it. */
+.handoff { margin: 1.2rem 0 0; }
+.handoff p, .handoff li, .handoff-builder p { hyphens: manual; }
+ul.keeps { list-style: none; margin: 0 0 1.4rem; padding: 0; }
+ul.keeps li { display: grid; grid-template-columns: 12.5rem 1fr; gap: 0.15rem 1rem; align-items: baseline; margin: 0; padding-block: 0.6rem; border-top: 1px solid var(--rule); }
+ul.keeps li:last-child { border-bottom: 1px solid var(--rule); }
+.keeps b { font: 700 1rem/1.3 var(--ui); }
+.keeps span { color: var(--muted); }
+.handoff .actions, .handoff-builder .actions { margin-top: 0; }
+.fine { font: 400 0.9rem/1.5 var(--ui); color: var(--muted); margin: 0.9rem 0 0; max-width: 62ch; }
+.hero-fac { font: 400 0.98rem/1.5 var(--ui); color: var(--muted); margin: 1.2rem 0 0; max-width: 46ch; }
+.handoff-builder { max-width: var(--measure); margin-top: 2.6rem; padding-top: 0.9rem; border-top: 2px solid var(--ink); }
+.handoff-builder h2 { margin-top: 0; }
+.export-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; margin: 1rem 0 1.2rem; }
+.export-row[hidden] { display: none; }
+.export-row .fine { margin: 0; flex: 1 1 22rem; }
+
 /* Footer */
 .site-foot { border-top: 1px solid var(--rule); background: var(--paper); margin-top: 2rem; }
 .foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem 2rem; padding-block: 1.3rem; font: 400 0.9rem/1.5 var(--ui); color: var(--muted); }
@@ -231,6 +248,7 @@ pre.block { white-space: pre-wrap; background: var(--paper); border: 1px solid v
   .two-col { grid-template-columns: 1fr; gap: 1rem; }
   .path-compact li { grid-template-columns: 2rem 1fr; }
   .pc-does { grid-column: 2; }
+  ul.keeps li { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 560px) {
   body { font-size: 1rem; }
@@ -242,7 +260,7 @@ pre.block { white-space: pre-wrap; background: var(--paper); border: 1px solid v
 /* Print: the whiteboard kit, the checklist, and the rubric are meant for paper. */
 @media print {
   body { background: #fff; font-size: 11pt; }
-  .site-head, .site-foot, .toc, .skip, .actions, .builder, noscript { display: none !important; }
+  .site-head, .site-foot, .toc, .skip, .actions, .builder, .handoff-builder, .hero-fac, noscript { display: none !important; }
   .doc { display: block; padding: 0; }
   a { color: inherit; text-decoration: none; }
   .checklist input { border: 1px solid #000; }

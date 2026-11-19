@@ -26,13 +26,14 @@ python scripts/build.py             # writes _site/
 python -m http.server -d _site 8000
 ```
 
-The build fails on a missing profile field, an unknown prompt placeholder, unbalanced `{{#if}}` blocks, prompt numbering out of order, a schema that disagrees with `data/anatomy.yaml`, or a broken internal link.
+The build fails on a missing profile field, an unknown prompt placeholder, unbalanced `{{#if}}` blocks, prompt numbering out of order, a schema that disagrees with `data/anatomy.yaml` or with the builder's intake fields, a malformed `facultory` block in `config.yaml`, or a broken internal link.
 
 ## Publish
 
 1. Settings, Pages: set the source to **GitHub Actions**.
 2. Push to `main`. The `pages` workflow builds the site and deploys it.
 3. Set `repo` in `config.yaml` if the repository is not `ucf-draco-mike/agenda-mentor`; the site links to its own source files there.
+4. The `facultory` block in `config.yaml` sets where the "keep it in Facultory" links point: the plan the signup form selects, the label it records under "How did you hear about Facultory?", and the page that opens after sign-in. The build checks each value.
 
 GitHub Pages sites are public, including those built from private repositories. Everything in `_site/` is meant to be public: the method, the prompts, and the profiles. Keep real agendas, intakes, and trackers in private repositories, never here.
 

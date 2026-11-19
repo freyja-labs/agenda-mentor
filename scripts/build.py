@@ -18,6 +18,7 @@ import re
 import shutil
 import sys
 from pathlib import Path
+from urllib.parse import urlencode
 
 import markdown
 import yaml
@@ -33,12 +34,27 @@ KNOWN_FIELDS = {
     "date", "month_year", "year_plus_2", "year_plus_5", "year_plus_6", "makeorbreak_months",
     "horizon_years", "agenda_term", "agenda_title_prefix", "discipline_profile",
 }
+# The intake answers the draft prompt uses, in form order. Facultory stores the same six
+# (INTAKE_KEYS in its lib/agenda.ts), and the schema's intake object must list them.
+INTAKE_FIELDS = ["wants", "funding", "people", "load", "context", "constraints"]
 PROFILE_REQUIRED = ["id", "name", "summary", "agenda_term", "agenda_title_prefix", "academy", "ladder",
                     "record_norms", "venues", "funders", "metric_conventions", "makeorbreak_archetypes",
                     "alignment_frameworks", "application_leaders", "convening_forms", "community_cycle",
                     "pitfalls", "verify_note"]
 
 PAGES = ["method", "whiteboard", "prompts", "profiles", "mentors", "verify", "track", "about"]
+
+# Facultory's app honors ?next= only for an in-app route like '#/agenda'; anything else
+# is ignored there, so a malformed value here would send visitors to the dashboard.
+FAC_NEXT = re.compile(r"#/[a-z0-9][a-z0-9/_-]{0,62}")
+
+
+def facultory_links(fac: dict) -> dict:
+    """The sign-up and sign-in links. They name this site as the source and nothing else."""
+    signup = {"lane": "individual", "step": "plan", "plan": fac["plan"], "heard": fac["heard"], "next": fac["next"]}
+    return {"url": fac["url"],
+            "signup": f"{fac['url']}/signup?{urlencode(signup)}",
+            "app": f"{fac['url']}/app?{urlencode({'next': fac['next']})}"}
 
 
 def load_yaml(name: str):
@@ -148,6 +164,21 @@ def check(cfg, profiles, prompts, anatomy) -> list[str]:
         errors.append(f"schema sections {schema_keys} do not match data/anatomy.yaml keys {anatomy_keys}")
     if not re.fullmatch(r"[\w.-]+/[\w.-]+", str(cfg.get("repo", ""))):
         errors.append("config.yaml: repo must be 'owner/name'")
+    fac = cfg.get("facultory")
+    if not isinstance(fac, dict):
+        errors.append("config.yaml: the facultory block is missing")
+    else:
+        if not re.fullmatch(r"https://[a-z0-9.-]+(?::\d+)?", str(fac.get("url", ""))):
+            errors.append("config.yaml: facultory.url must be an https origin with no path, such as https://facultory.com")
+        if not FAC_NEXT.fullmatch(str(fac.get("next", ""))):
+            errors.append("config.yaml: facultory.next must be an in-app route such as '#/agenda'")
+        if not re.fullmatch(r"[a-z0-9-]{1,40}", str(fac.get("plan", ""))):
+            errors.append("config.yaml: facultory.plan must be a plan slug such as 'noai'")
+        if not 0 < len(str(fac.get("heard", "")).strip()) <= 60:
+            errors.append("config.yaml: facultory.heard must be 1 to 60 characters")
+    intake = schema["properties"].get("intake", {}).get("properties", {})
+    if list(intake) != INTAKE_FIELDS:
+        errors.append(f"schema intake keys {list(intake)} do not match the builder's intake fields {INTAKE_FIELDS}")
     return errors
 
 
@@ -185,6 +216,8 @@ def build(out: Path, check_only: bool) -> int:
         return 1
 
     repo_url = f"https://github.com/{cfg['repo']}"
+    fac = facultory_links(cfg["facultory"])
+    schema = json.loads((ROOT / "schema" / "agenda.schema.json").read_text(encoding="utf-8"))
     env = Environment(loader=FileSystemLoader(TEMPLATES), autoescape=select_autoescape(["html"]),
                       trim_blocks=True, lstrip_blocks=True)
     env.filters["md"] = md
@@ -202,7 +235,7 @@ def build(out: Path, check_only: bool) -> int:
         depth = rel.count("/")
         root = "../" * depth
         page_html = env.get_template(template).render(
-            cfg=cfg, nav=nav, root=root, repo_url=repo_url, current=ctx.get("slug", ""), **ctx)
+            cfg=cfg, nav=nav, root=root, repo_url=repo_url, fac=fac, current=ctx.get("slug", ""), **ctx)
         target = build_dir / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(page_html, encoding="utf-8")
@@ -214,11 +247,13 @@ def build(out: Path, check_only: bool) -> int:
         "sessions": lambda root: env.get_template("partials/sessions.html").render(sessions=sessions),
         "checklist": lambda root: env.get_template("partials/checklist.html").render(checklist=checklist),
         "board": lambda root: env.get_template("partials/board.svg").render(redpen=True, label="whiteboard-layout"),
+        "facultory": lambda root: env.get_template("partials/facultory.html").render(fac=fac),
     }
 
     def render_content(slug: str, root: str):
         meta, body = read_page(slug)
-        body = body.replace("{{repo_url}}", repo_url)
+        body = (body.replace("{{repo_url}}", repo_url)
+                .replace("{{facultory_signup}}", fac["signup"]).replace("{{facultory_app}}", fac["app"]))
         body_html = md(body)
         for key, fn in includes.items():
             body_html = re.sub(rf"<p>\[\[{key}\]\]</p>|\[\[{key}\]\]", lambda _m, f=fn: f(root), body_html)
@@ -241,6 +276,9 @@ def build(out: Path, check_only: bool) -> int:
         "prompts": [{k: p[k] for k in ("id", "n", "title", "body", "file")} | {"notes_html": md(p["notes"])} for p in prompts],
         "known": sorted(KNOWN_FIELDS),
         "storageKey": "agenda-mentor:v1",
+        # For "Download your answers": the file Facultory's Import JSON reads.
+        "format": schema["properties"]["format"]["const"],
+        "intakeKeys": INTAKE_FIELDS,
     }
     write("prompts/index.html", "prompts.html", slug="prompts", meta=meta, intro=intro_html, prompts=prompts,
           profiles=profiles, portal_json=json.dumps(portal, ensure_ascii=False).replace("</", "<\\/"))

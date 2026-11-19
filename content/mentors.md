@@ -39,3 +39,7 @@ Score the draft and then version 2. A criterion at 0 or 1 on version 2 holds cir
 The review will be blunt; the conversation should be specific. Open with what holds up, because the assets in that table are the agenda's foundation. Then take the reviewer's findings in the order they would stop a program officer: claims the record does not support first, then the gap, then the make-or-break engine, then scope. End by agreeing the order of the decisions, and schedule the decisions session within two weeks, while the review is fresh.
 
 Draft agendas are coaching documents. They stay between the faculty member and the mentors until version 2 passes the [verification checklist](../verify/).
+
+## Review links in Facultory
+
+When the faculty member keeps the agenda in [Facultory]({{facultory_signup}}), they can send you a review link in place of a document. It opens the current version without an account. If they allow comments, you comment on each section, and they resolve each comment as they revise. They can withdraw the link at any time, and it never shows their intake answers.
