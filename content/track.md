@@ -20,6 +20,8 @@ The template is in [`tracker-template/`]({{repo_url}}/tree/main/tracker-template
 3. Run `python scripts/build.py --check`, fix anything it reports, and push. The first push runs the build workflow.
 4. Give the mentor read access to the repository, so the digest and the dashboard are shared without sending files.
 
+When the agenda lives in Facultory, its Tracker tab does steps 1 and 2 for you. It writes the whole repository from the agenda: the template; `data/`, filled from the claims ledger, the decision log, and a prompt 5 seed checked against the tracker's rules; and the agenda and its latest red-team review in `docs/`. Start at step 3.
+
 ## Optional: the dashboard on GitHub Pages
 
 GitHub Pages sites are public even for private repositories, so the template never publishes the dashboard as is. When you turn Pages on, `scripts/protect.py` encrypts the dashboard with a passphrase you store as a repository secret, and the browser decrypts it locally. The data files, the digest, and the calendar never reach Pages. The template's README has the steps and the limits of that protection.
@@ -36,8 +38,8 @@ python scripts/build.py                            # rebuild site/ locally
 
 Never delete an item; set its status to `dropped`, so the history stays. IDs never change, because they double as calendar identifiers.
 
-## Keep it in Facultory instead
+## Keep it in Facultory, or start the tracker there
 
-Faculty who would rather not run a repository can keep the agenda in Facultory. Its claims ledger and decision log use the tracker's fields, both defined in [`schema/agenda.schema.json`]({{repo_url}}/blob/main/schema/agenda.schema.json), and the mentor gets a review link in place of repository access.
+Faculty who would rather not run a repository can keep the agenda in Facultory. Its claims ledger and decision log use the tracker's fields, both defined in [`schema/agenda.schema.json`]({{repo_url}}/blob/main/schema/agenda.schema.json), and the mentor gets a review link in place of repository access. Faculty who want the repository can start it there: the Tracker tab downloads it ready to push, and from the first push the repository is the source of truth.
 
 [[facultory]]
