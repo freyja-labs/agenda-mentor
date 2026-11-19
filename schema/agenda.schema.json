@@ -31,7 +31,7 @@
     "intake": {
       "type": "object",
       "additionalProperties": false,
-      "description": "The intake answers the draft prompt uses. They are the faculty member's private notes: a tool that shows an agenda to a mentor leaves them out.",
+      "description": "The intake answers the draft prompt uses. They are the faculty member's private notes: Facultory reads them on import, never shows them on a mentor's review link, and leaves them out of its exports.",
       "properties": {
         "wants": { "type": "string", "description": "What the faculty member wants to be known for." },
         "funding": { "type": "string", "description": "Current funding, with end dates." },
