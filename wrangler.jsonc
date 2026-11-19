@@ -1,0 +1,16 @@
+// Agenda Mentor on Cloudflare Workers: static assets only, no Worker script, so every
+// request is served from the asset store and none is billed as a Worker invocation.
+// A git-connected Workers Build runs on every push to main: it runs the build command in
+// the README ("Publish"), then `npx wrangler deploy`. The custom domain,
+// mentor.freyjalabs.com, is attached in the dashboard the way freyjalabs-site attaches
+// its domains. Security headers live in _headers, which scripts/build.py writes.
+{
+  "name": "agenda-mentor",
+  // The same date as freyjalabs-site; an assets-only Worker does not depend on it.
+  "compatibility_date": "2026-06-01",
+  "assets": {
+    "directory": "./_site",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

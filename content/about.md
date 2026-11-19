@@ -15,9 +15,11 @@ The prompt builder runs entirely in your browser. Nothing you type is sent anywh
 
 **Download your answers** saves a file to your computer. Nothing reaches Facultory until you import that file there yourself. Links to Facultory open its signup with this site named as the source, and they carry nothing you typed.
 
-## Facultory
+Cloudflare serves the site. Like any host, it receives each page request, and no request carries what you type into the builder: the form never submits.
 
-This site and [Facultory]({{facultory_signup}}), a hosted platform for faculty, have the same author. Facultory's Research Agenda tool keeps an agenda in the format this site publishes and gives a mentor a review link that needs no account. Everything on this site works without it.
+## Who publishes it
+
+[Freyja Labs](https://freyjalabs.com) publishes Agenda Mentor. This site and [Facultory]({{facultory_signup}}), a hosted platform for faculty, have the same author. Facultory's Research Agenda tool keeps an agenda in the format this site publishes and gives a mentor a review link that needs no account. Everything on this site works without it.
 
 ## Contribute
 

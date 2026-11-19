@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}{{ cfg.site_name }}{% endblock %}</title>
 <meta name="description" content="{% block description %}{{ cfg.tagline }}{% endblock %}">
+{% if canonical %}<link rel="canonical" href="{{ canonical }}">{% else %}<meta name="robots" content="noindex">{% endif %}
 <link rel="preload" href="{{ root }}assets/fonts/literata-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ root }}assets/fonts/atkinson-hyperlegible-next-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ root }}assets/css/site.css">
@@ -30,7 +31,7 @@
 </main>
 <footer class="site-foot">
   <div class="wrap foot-row">
-    <p>{{ cfg.site_name }} is built from plain files on GitHub. <a href="{{ repo_url }}">Source and issues</a>.{% if cfg.host_note %} {{ cfg.host_note }}{% endif %}</p>
+    <p>{{ cfg.site_name }} is a <a href="{{ cfg.publisher.url }}">{{ cfg.publisher.name }}</a> project, built from plain files on GitHub. <a href="{{ repo_url }}">Source and issues</a>.{% if cfg.host_note %} {{ cfg.host_note }}{% endif %}</p>
     <p><a href="{{ fac.signup }}">Keep your agenda in Facultory</a>.</p>
     <p>Nothing you type into the prompt builder is sent anywhere.</p>
   </div>

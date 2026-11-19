@@ -2,8 +2,15 @@
 # files on the site point there. Change it if the repository moves.
 site_name: Agenda Mentor
 tagline: Research agendas drafted from your own whiteboard, checked against your record, and tracked with a mentor.
-repo: ucf-draco-mike/agenda-mentor
+repo: freyja-labs/agenda-mentor
 branch: main
+# The address the site is served at, with a trailing slash. Canonical links, the sitemap,
+# the 404 page, and the schema's $id are built from it.
+site_url: https://mentor.freyjalabs.com/
+# Named in the footer and on the About page.
+publisher:
+  name: Freyja Labs
+  url: https://freyjalabs.com
 # Shown in the footer. Leave empty for no institution.
 host_note: ""
 # Facultory, the hosted place to keep an agenda. The build composes the sign-up and

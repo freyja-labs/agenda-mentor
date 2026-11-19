@@ -7,6 +7,9 @@
   if (!dataEl || !root) return;
   var PORTAL = JSON.parse(dataEl.textContent);
   var form = document.getElementById("intake");
+  // The form never submits: a submission would put every answer into the page address,
+  // where the host's request logs and the browser's history would keep it.
+  form.addEventListener("submit", function (e) { e.preventDefault(); });
   var sheet = document.getElementById("sheet");
   var statusEl = document.getElementById("p-status");
   var notesEl = document.getElementById("p-notes");

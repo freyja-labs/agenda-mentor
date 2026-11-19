@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{# Served for any address that matches no file, at any depth, so `root` is the site's
+   root path and every link below is absolute. #}
+{% block title %}Page not found: {{ cfg.site_name }}{% endblock %}
+{% block description %}No page lives at this address.{% endblock %}
+{% block bodyclass %}page-404{% endblock %}
+{% block main %}
+<div class="wrap doc">
+  <article class="prose">
+    <h1>Page not found</h1>
+    <p class="lede">No page lives at this address.</p>
+    <p>Start from the <a href="{{ root }}index.html">home page</a>, or go straight to the <a href="{{ root }}prompts/index.html">prompt builder</a>.</p>
+  </article>
+</div>
+{% endblock %}
