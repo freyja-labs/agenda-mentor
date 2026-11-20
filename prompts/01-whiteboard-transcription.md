@@ -1,6 +1,6 @@
 # Prompt 1: Transcribe the whiteboard
 
-Use right after the whiteboard session. Attach the photo. The faculty member checks the transcription before anything else runs, because every later prompt treats it as the faculty member's own statement of the problem.
+Use right after the whiteboard session. Attach the photo. The faculty member checks the transcription before anything else runs, because every later prompt treats it as the faculty member's own statement of the problem. A typed board skips this prompt: its text goes to prompt 2 as the transcription once the faculty member has read it back.
 
 ---
 

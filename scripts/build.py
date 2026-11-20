@@ -37,6 +37,18 @@ KNOWN_FIELDS = {
 # The intake answers the draft prompt uses, in form order. Facultory stores the same six
 # (INTAKE_KEYS in its lib/agenda.ts), and the schema's intake object must list them.
 INTAKE_FIELDS = ["wants", "funding", "people", "load", "context", "constraints"]
+# The prompt builder keeps its answers in the browser under this key. The typed board keeps its
+# own copy under the second key, and its Send button writes the board's text into the builder's
+# whiteboard field.
+BUILDER_STORAGE_KEY = "agenda-mentor:v1"
+BOARD_STORAGE_KEY = "agenda-mentor:board:v1"
+# The longest answer each box on the typed board takes. Facultory keeps a whiteboard
+# transcription of up to 12,000 characters (LIMITS.whiteboard in its lib/agenda.ts), so the
+# boxes together, plus the labels the board's text adds, must fit under that.
+BOARD_LIMITS = {"field": 160, "area": 160, "topic": 160, "objective": 600,
+                "challenge": 240, "started": 1000, "looking": 1000, "red": 500, "other": 1200}
+BOARD_LABEL_ALLOWANCE = 1000
+FACULTORY_WHITEBOARD_LIMIT = 12_000
 PROFILE_REQUIRED = ["id", "name", "summary", "agenda_term", "agenda_title_prefix", "academy", "ladder",
                     "record_norms", "venues", "funders", "metric_conventions", "makeorbreak_archetypes",
                     "alignment_frameworks", "application_leaders", "convening_forms", "community_cycle",
@@ -215,7 +227,19 @@ def check(cfg, profiles, prompts, anatomy, stages) -> list[str]:
     if list(intake) != INTAKE_FIELDS:
         errors.append(f"schema intake keys {list(intake)} do not match the builder's intake fields {INTAKE_FIELDS}")
     errors += check_walkthrough(stages, {p["id"]: p["n"] for p in prompts})
+    errors += check_board()
     return errors
+
+
+def check_board() -> list[str]:
+    """The typed board's text has to fit in Facultory's whiteboard field."""
+    challenge = sum(BOARD_LIMITS[k] for k in ("challenge", "started", "looking", "red"))
+    total = (sum(BOARD_LIMITS[k] for k in ("field", "area", "topic", "objective", "other"))
+             + 3 * challenge + BOARD_LABEL_ALLOWANCE)
+    if total > FACULTORY_WHITEBOARD_LIMIT:
+        return [f"typed board: its boxes allow {total} characters with labels, "
+                f"and Facultory keeps {FACULTORY_WHITEBOARD_LIMIT}; lower BOARD_LIMITS"]
+    return []
 
 
 def check_walkthrough(stages, prompt_numbers) -> list[str]:
@@ -344,13 +368,19 @@ def build(out: Path, check_only: bool) -> int:
         meta, body_html, toc = render_content(slug, "../")
         write(f"{slug}/index.html", "page.html", slug=slug, meta=meta, body=body_html, toc=toc)
 
+    # The typed board: the whiteboard's layout with text boxes, for a session with no board.
+    meta, intro_html, _ = render_content("typed-board", "../../")
+    board = {"storageKey": BOARD_STORAGE_KEY, "builderKey": BUILDER_STORAGE_KEY, "limit": FACULTORY_WHITEBOARD_LIMIT}
+    write("whiteboard/type/index.html", "typed-board.html", slug="whiteboard", meta=meta, intro=intro_html,
+          limits=BOARD_LIMITS, board_json=json.dumps(board))
+
     # Prompt builder
     meta, intro_html, _ = render_content("prompts", "../")
     portal = {
         "profiles": [{**p, "block": profile_block(p)} for p in profiles],
         "prompts": [{k: p[k] for k in ("id", "n", "title", "body", "file")} | {"notes_html": md(p["notes"])} for p in prompts],
         "known": sorted(KNOWN_FIELDS),
-        "storageKey": "agenda-mentor:v1",
+        "storageKey": BUILDER_STORAGE_KEY,
         # For "Download your answers": the file Facultory's Import JSON reads.
         "format": schema["properties"]["format"]["const"],
         "intakeKeys": INTAKE_FIELDS,

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{{ meta.title }}: {{ cfg.site_name }}{% endblock %}
+{% block description %}{{ meta.description }}{% endblock %}
+{% block bodyclass %}page-typed-board{% endblock %}
+{% block main %}
+<div class="wrap">
+  <div class="prose prose-head">
+    <p class="crumb"><a href="{{ root }}whiteboard/index.html">Whiteboard session</a></p>
+    <h1>{{ meta.title }}</h1>
+    <p class="lede">{{ meta.description }}</p>
+    {{ intro|safe }}
+  </div>
+
+  <noscript><p class="note-red">The typed board needs JavaScript to keep what you type and send it to the prompt builder. Without it, use a whiteboard and <a href="{{ root }}prompts/index.html#p01-whiteboard-transcription">prompt 1</a>.</p></noscript>
+
+  {#- The same regions as the drawn board (partials/board.svg) and the same parts prompt 1
+      returns: field, area, topic, objective, three numbered challenges with who started
+      each and who else is looking, and anything else on the board. #}
+  <div class="tb-wrap" id="tb-wrap" hidden>
+    <form class="tb" id="tb" autocomplete="off" aria-label="The typed board">
+      <div class="tb-names">
+        <label for="tb-field">Field</label>
+        <textarea id="tb-field" name="field" class="tb-line" rows="1" maxlength="{{ limits.field }}" placeholder="What would the field call this?"></textarea>
+        <label for="tb-area">Area</label>
+        <textarea id="tb-area" name="area" class="tb-line" rows="1" maxlength="{{ limits.area }}" placeholder="What would a program officer call it?"></textarea>
+        <label for="tb-topic">Topic</label>
+        <textarea id="tb-topic" name="topic" class="tb-line" rows="1" maxlength="{{ limits.topic }}" placeholder="Your part of it, in a few words"></textarea>
+      </div>
+
+      <div class="tb-obj">
+        <label for="tb-objective">Objective</label>
+        <p class="tb-ask" id="tb-ask">What can someone do that they can't today?</p>
+        <textarea id="tb-objective" name="objective" class="tb-area" rows="3" maxlength="{{ limits.objective }}" aria-describedby="tb-ask" placeholder="One sentence: what the work extracts, protects, explains, improves, or makes possible"></textarea>
+      </div>
+
+      {% for n in [1, 2, 3] %}
+      <fieldset class="tb-ch" id="tb-c{{ n }}">
+        <legend class="vh">Challenge {{ n }}</legend>
+        <p class="tb-ch-head" aria-hidden="true"><span class="tb-num">{{ n }}</span> Challenge</p>
+        <label class="vh" for="tb-c{{ n }}-text">Challenge {{ n }}, in one line</label>
+        <textarea id="tb-c{{ n }}-text" name="c{{ n }}_text" class="tb-line" rows="1" maxlength="{{ limits.challenge }}" placeholder="The challenge, in one line"></textarea>
+        <label for="tb-c{{ n }}-started">who started this?</label>
+        <textarea id="tb-c{{ n }}-started" name="c{{ n }}_started" class="tb-area" rows="2" maxlength="{{ limits.started }}" placeholder="The works that started it: authors, titles, years"></textarea>
+        <label for="tb-c{{ n }}-looking">who else is looking?</label>
+        <textarea id="tb-c{{ n }}-looking" name="c{{ n }}_looking" class="tb-area" rows="2" maxlength="{{ limits.looking }}" placeholder="People and groups on it now. If nobody is, write that down."></textarea>
+        <label class="tb-red-label" for="tb-c{{ n }}-red">challenger's questions</label>
+        <textarea id="tb-c{{ n }}-red" name="c{{ n }}_red" class="tb-area tb-red" rows="2" maxlength="{{ limits.red }}" placeholder="A product already? Fundable? Can you start it with what you have today?"></textarea>
+        <p class="tb-lead"><input type="radio" id="tb-c{{ n }}-lead" name="lead" value="{{ n }}"><label for="tb-c{{ n }}-lead">lead with this one</label></p>
+      </fieldset>
+      {% endfor %}
+
+      <div class="tb-other">
+        <label for="tb-other">arrows, and anything else on the board</label>
+        <textarea id="tb-other" name="other" class="tb-area" rows="2" maxlength="{{ limits.other }}" placeholder="What points to what, and anything that fits nowhere above"></textarea>
+      </div>
+    </form>
+    <div class="tb-tray" aria-hidden="true"><span></span></div>
+
+    <div class="tb-bar">
+      <a class="btn" id="tb-send" href="{{ root }}prompts/index.html#p02-draft-agenda">Send to the prompt builder</a>
+      <button type="button" class="btn btn-quiet" id="tb-copy">Copy the text</button>
+      <button type="button" class="btn btn-quiet" id="tb-download">Download .md</button>
+      <button type="button" class="btn btn-quiet" id="tb-print">Print</button>
+    </div>
+    <p class="p-status" id="tb-status" aria-live="polite"></p>
+    <p class="fine">Read the board back to the faculty member before you send it. Their confirmation takes the place of the photo and prompt 1, and the builder puts the text where the transcription goes.</p>
+    <p class="tb-opts form-foot">Saves in this browser as you type; nothing is sent anywhere.
+      <label class="tb-plain"><input type="checkbox" id="tb-plain"> Plain lettering</label>
+      <button type="button" class="linkish" id="tb-clear">Clear the board</button>
+    </p>
+
+    <details class="tb-text">
+      <summary>The text the prompt builder receives</summary>
+      <div class="sheet" id="tb-out" tabindex="0" aria-label="The board as text"></div>
+    </details>
+  </div>
+</div>
+<script id="tb-data" type="application/json">{{ board_json|safe }}</script>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/js/board.js"></script>{% endblock %}

@@ -240,6 +240,60 @@ h3 { font-size: 1.15rem; line-height: 1.3; margin: 1.8rem 0 0.4rem; font-weight:
 .board .b-r { font-size: 23px; font-weight: 700; }
 .board .b-arrow, .board .b-ring { fill: none; stroke: var(--redpen); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 
+/* The typed board: the drawn board's regions with text boxes on its writing lines. Kalam is
+   the marker; Plain lettering switches the writing to the interface face. Red is the
+   challenger's questions only. */
+.tb-wrap { margin-top: 1.4rem; }
+.tb { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "names names obj" "c1 c2 c3" "other other other"; gap: 2.2rem 2.6rem; padding: clamp(1.2rem, 2.6vw, 2.4rem); background: #FCFDFD; border: 12px solid var(--frame); border-radius: 16px; }
+.tb-tray { position: relative; width: 40%; height: 16px; margin: -5px auto 0; background: #BFC4CA; border-radius: 0 0 5px 5px; }
+.tb-tray span { position: absolute; left: 56%; top: -10px; width: 70px; height: 11px; border-radius: 6px; background: var(--marker); }
+.tb-tray span::after { content: ""; position: absolute; right: -12px; top: 0; width: 16px; height: 11px; border-radius: 3px; background: var(--marker-deep); }
+
+.tb-names { grid-area: names; align-self: start; display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: start; gap: 0.7rem 1.2rem; max-width: 40rem; }
+.tb-names label { padding-top: 0.35rem; }
+.tb-names label, .tb-obj > label, .tb-ch-head { font: 700 2rem/1.1 var(--hand); color: var(--marker); }
+.tb-line { display: block; width: 100%; min-width: 0; margin: 0; padding: 0 0.2rem; border: 0; border-radius: 0; resize: none; overflow: hidden; color: var(--marker); font: 400 1.4rem/2.4rem var(--hand); background-color: transparent; background-image: linear-gradient(to bottom, transparent calc(2.4rem - 3px), #9BAAD6 calc(2.4rem - 3px)); background-size: 100% 2.4rem; background-attachment: local; }
+.tb-line:focus { background-image: linear-gradient(to bottom, transparent calc(2.4rem - 3px), var(--marker) calc(2.4rem - 3px)); }
+.tb-area { display: block; width: 100%; min-width: 0; margin: 0; padding: 0 0.2rem; border: 0; border-radius: 0; resize: none; overflow: hidden; color: var(--marker); font: 400 1.25rem/2.1rem var(--hand); background-color: transparent; background-image: linear-gradient(to bottom, transparent calc(2.1rem - 2px), #C9D2EC calc(2.1rem - 2px)); background-size: 100% 2.1rem; background-attachment: local; }
+.tb ::placeholder { color: #6A7385; font: 400 0.98rem/1.4 var(--ui); opacity: 1; }
+.tb-area::placeholder { line-height: 2.1rem; }
+.tb-line::placeholder { line-height: 2.4rem; }
+.tb.tb-plain .tb-line { font: 400 1.15rem/2.4rem var(--ui); }
+.tb.tb-plain .tb-area { font: 400 1.05rem/2.1rem var(--ui); }
+
+.tb-obj { grid-area: obj; align-self: start; padding: 0.9rem 1.2rem 0.6rem; border: 3px solid var(--marker); border-radius: 14px 22px 16px 20px / 20px 14px 22px 16px; }
+.tb-ask { margin: 0.3rem 0 0.2rem; font: 400 1.3rem/1.3 var(--hand); color: var(--marker); }
+
+.tb-ch { min-width: 0; margin: 0; padding: 0; border: 0; }
+#tb-c1 { grid-area: c1; }
+#tb-c2 { grid-area: c2; }
+#tb-c3 { grid-area: c3; }
+.tb-ch-head { position: relative; display: inline-flex; align-items: center; gap: 0.7rem; margin: 0 0 0.3rem; }
+.tb-num { display: inline-grid; place-items: center; flex: none; width: 2.7rem; height: 2.7rem; border: 3px solid var(--marker); border-radius: 50%; font-size: 1.7rem; line-height: 1; }
+.tb-ch.is-lead .tb-ch-head::after { content: ""; position: absolute; inset: -0.55rem -1.1rem -0.5rem -0.7rem; border: 3px solid var(--marker); border-radius: 50%; transform: rotate(-2.5deg); }
+.tb-ch label, .tb-other label { display: block; margin: 1.1rem 0 0.1rem; font: 400 1.3rem/1.2 var(--hand); color: var(--marker); }
+.tb-ch .tb-red-label, .tb-red { color: var(--redpen); }
+.tb-lead { display: flex; align-items: center; gap: 0.55rem; margin: 1rem 0 0; }
+.tb-ch .tb-lead label { margin: 0; cursor: pointer; }
+.tb-lead input { appearance: none; display: grid; place-items: center; flex: none; width: 1.45rem; height: 1.45rem; margin: 0; border: 2.5px solid var(--marker); border-radius: 50%; background: transparent; cursor: pointer; }
+.tb-lead input::before { content: ""; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--marker); transform: scale(0); }
+.tb-lead input:checked::before { transform: none; }
+.tb-other { grid-area: other; }
+.tb-mirror { display: none !important; }
+
+.tb-bar { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.8rem; }
+#tb-status { min-height: 1.35em; margin-top: 0.8rem; }
+.tb-opts { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.4rem; margin: 0.7rem 0 0; }
+.tb-plain { display: inline-flex; align-items: center; gap: 0.4rem; font: 600 0.9rem/1.3 var(--ui); color: var(--ink); cursor: pointer; }
+.tb-text { margin: 1.6rem 0 3.5rem; }
+.tb-text summary { font: 600 0.95rem/1.3 var(--ui); color: var(--marker); cursor: pointer; }
+.tb-text .sheet { margin-top: 0.8rem; max-height: 60vh; }
+@media (max-width: 61.99rem) {
+  .tb { grid-template-columns: minmax(0, 1fr); grid-template-areas: "names" "obj" "c1" "c2" "c3" "other"; gap: 2rem; border-width: 8px; }
+  .tb-tray { width: 60%; }
+}
+@page board { size: landscape; margin: 10mm; }
+
 /* Reading pages */
 .doc { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: 3rem; padding-block: 2.5rem 4rem; align-items: start; }
 .doc:not(:has(.toc)) { grid-template-columns: minmax(0, 1fr); }
@@ -388,6 +442,12 @@ ul.keeps li:last-child { border-bottom: 1px solid var(--rule); }
   .walk-steps, .walk-toggle { display: none !important; }
   .walk.is-ready .walk-say { visibility: visible; margin: 0 0 0.5rem; }
   .walk.is-ready .say-t { display: inline; font-size: inherit; }
+  .page-typed-board .prose-head, .tb-bar, .tb-opts, .tb-text, .page-typed-board .fine, #tb-status, .tb-tray { display: none !important; }
+  .tb { page: board; zoom: 0.74; break-inside: avoid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "names names obj" "c1 c2 c3" "other other other"; border-width: 8px; gap: 1.4rem 2rem; padding: 1.4rem 1.8rem; }
+  .tb textarea, .tb-lead { display: none !important; }
+  .tb-mirror { display: block !important; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .tb-mirror.tb-line { min-height: 2.4rem; background: none; border-bottom: 3px solid #9BAAD6; }
+  .tb-mirror.tb-area { min-height: 4.2rem; }
   .doc { display: block; padding: 0; }
   a { color: inherit; text-decoration: none; }
   .checklist input { border: 1px solid #000; }
