@@ -1,75 +1,34 @@
 {% extends "base.html" %}
 {% block bodyclass %}page-home{% endblock %}
 {% block main %}
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <h1>Start at a whiteboard. Finish with an agenda you can defend.</h1>
-      <p class="lede">A method, six prompts, and a tracker for faculty building a five-year research agenda with a mentor. AI drafts from your own whiteboard and then checks the draft the way your field's toughest reviewer would. You make the decisions.</p>
-      <p class="actions">
-        <a class="btn" href="{{ root }}whiteboard/index.html">Plan a whiteboard session</a>
-        <a class="btn btn-quiet" href="{{ root }}prompts/index.html">Fill in the prompts</a>
-      </p>
-      <p class="hero-fac"><a href="{{ fac.signup }}">Facultory</a> keeps the agenda once it exists, with the claims ledger, the decisions, and your mentor's comments beside it.</p>
+<div class="home">
+  <div class="home-top">
+    <h1>Turn a whiteboard session into a research agenda you can defend.</h1>
+    <p class="actions">
+      <a class="btn" href="{{ root }}whiteboard/index.html">Plan a whiteboard session</a>
+      <a class="btn btn-quiet" href="{{ root }}prompts/index.html">Fill in the prompts</a>
+    </p>
+  </div>
+
+  <section class="walk" data-walk data-step="2" aria-labelledby="walk-h">
+    <h2 class="vh" id="walk-h">How it works, in {{ stages|length }} steps</h2>
+    {% include "partials/walkthrough.svg" %}
+    <div class="walk-side">
+      <button type="button" class="walk-toggle">Play</button>
+      <div class="walk-steps" role="tablist" aria-label="Steps">
+        {% for s in stages %}
+        <button type="button" class="ws" role="tab" id="wt{{ loop.index }}" aria-controls="wp{{ loop.index }}" aria-selected="false" tabindex="-1"><span class="ws-n">{{ loop.index }}</span> <span class="ws-t">{{ s.title }}</span><span class="ws-bar" aria-hidden="true"><span class="ws-fill"></span></span></button>
+        {% endfor %}
+      </div>
+      <div class="walk-says">
+        {% for s in stages %}
+        <p class="walk-say" id="wp{{ loop.index }}"><b class="say-t">{{ s.title }}<span class="say-dot">.</span></b> {{ s.walk_html|safe }}</p>
+        {% endfor %}
+      </div>
     </div>
-    <figure class="hero-board">
-      {{ board|safe }}
-      <figcaption>The board every agenda starts from. Blue is the faculty member's; red is the reviewer's.</figcaption>
-    </figure>
-  </div>
-</section>
+  </section>
 
-<section class="band">
-  <div class="wrap narrow">
-    <h2>The path</h2>
-    <p>Seven steps, in this order. The faculty member owns every decision; the mentor holds the process.</p>
-    <ol class="path-compact">
-      {% for s in stages %}
-      <li>
-        <span class="pc-title">{{ s.title }}</span>
-        <span class="pc-does">{{ s.output }}{% if s.prompt %}, with <a href="{{ root }}prompts/index.html#p{{ s.prompt }}">prompt {{ prompts[s.prompt].n }}</a>{% endif %}.</span>
-      </li>
-      {% endfor %}
-    </ol>
-    <p><a href="{{ root }}method/index.html">Read the method</a></p>
-  </div>
-</section>
-
-<section class="band band-alt">
-  <div class="wrap narrow">
-    <h2>Built for any field</h2>
-    <p>The skeleton stays the same, so a dean can read any agenda in ten minutes and a mentor can compare a cohort. A discipline profile changes what fills it: the field's highest recognition, what counts as the record, its venues, funders, standards of evidence, and how it convenes.</p>
-    <table class="tight">
-      <thead><tr><th scope="col">Profile</th><th scope="col">Highest recognition</th><th scope="col">Mid-career milestone</th></tr></thead>
-      <tbody>
-      {% for p in profiles %}
-        <tr><td><a href="{{ root }}profiles/{{ p.id }}/index.html">{{ p.name }}</a></td><td>{{ p.academy.name }}</td><td>{{ p.mid_milestone }}</td></tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section class="band">
-  <div class="wrap narrow two-col">
-    <div>
-      <h2>For mentors</h2>
-      <p>A year of sessions, a nine-point review rubric, and a way to run the red-team conversation so the faculty member leaves with decisions instead of a list of complaints.</p>
-      <p><a href="{{ root }}mentors/index.html">Mentor guide</a></p>
-    </div>
-    <div>
-      <h2>Before it circulates</h2>
-      <p>A reviewer reads the CV right after the agenda. The checklist catches the failures AI drafts make every time: stale claims, overstated gaps, and targets written as facts.</p>
-      <p><a href="{{ root }}verify/index.html">Verification checklist</a></p>
-    </div>
-  </div>
-</section>
-
-<section class="band band-alt">
-  <div class="wrap narrow">
-    <h2>Keep the agenda in Facultory</h2>
-    <p>An agenda earns its keep in the years after it is written, while the record catches up with the plan. Facultory's Research Agenda tool holds it between sessions.</p>
-    {% include "partials/facultory.html" %}
-  </div>
-</section>
+  <p class="home-fac"><a href="{{ fac.signup }}">Facultory</a> keeps the agenda once it exists, with the claims ledger, the decisions, and your mentor's comments beside it.</p>
+</div>
 {% endblock %}
+{% block scripts %}<script src="{{ root }}assets/js/walkthrough.js"></script>{% endblock %}

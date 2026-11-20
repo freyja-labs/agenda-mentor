@@ -13,7 +13,7 @@ Agenda Mentor is a [Freyja Labs](https://freyjalabs.com) project, served at **ht
 | `data/stages.yaml`, `anatomy.yaml`, `rubric.yaml`, `sessions.yaml`, `checklist.yaml` | The path, the agenda's sections, the mentor rubric, the mentoring year, and the verification checklist |
 | `schema/agenda.schema.json` | The agenda as JSON, with section keys that match `data/anatomy.yaml`; other tools use the same keys |
 | `content/` | Page text in Markdown; `[[stages]]`-style markers pull in the data above |
-| `templates/`, `assets/` | Jinja templates, the stylesheet, the builder script, and self-hosted fonts (SIL Open Font License) |
+| `templates/`, `assets/` | Jinja templates, the home page walkthrough, the stylesheet, the builder and walkthrough scripts, and self-hosted fonts (SIL Open Font License) |
 | `scripts/build.py` | Validation and the site build |
 | `tracker-template/` | A copy-me tracker: YAML data in, a dashboard, a calendar feed, and a weekly digest issue out |
 
