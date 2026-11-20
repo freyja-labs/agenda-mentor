@@ -80,23 +80,148 @@ h3 { font-size: 1.15rem; line-height: 1.3; margin: 1.8rem 0 0.4rem; font-weight:
 .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.6rem; }
 .linkish { font: inherit; color: var(--marker); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
 
-/* Home */
-.hero { padding-block: clamp(2rem, 4vw, 3.5rem) 2.5rem; background: var(--paper); border-bottom: 1px solid var(--rule); }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
-.hero-copy .lede { font-size: 1.22rem; }
-.hero-board { margin: 0; }
-.hero-board figcaption { font: 400 0.92rem/1.4 var(--ui); color: var(--muted); margin-top: 0.6rem; }
-.band { padding-block: 2.6rem; }
-.band h2 { margin-top: 0; }
-.band-alt { background: var(--paper); border-block: 1px solid var(--rule); }
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-.two-col h2 { font-size: 1.3rem; }
-.path-compact { margin: 1.2rem 0 1.4rem; padding: 0; list-style: none; counter-reset: pc; }
-.path-compact li { counter-increment: pc; display: grid; grid-template-columns: 2.4rem 15.5rem 1fr; gap: 0 1rem; padding-block: 0.65rem; border-top: 1px solid var(--rule); align-items: baseline; }
-.path-compact li:last-child { border-bottom: 1px solid var(--rule); }
-.path-compact li::before { content: counter(pc); font: 700 1.35rem/1 var(--ui); color: var(--marker); }
-.pc-title { font: 700 1.02rem/1.3 var(--ui); }
-.pc-does { color: var(--muted); }
+/* Home: one line, then the walkthrough. */
+.home { width: min(100% - 2.5rem, 76rem); margin-inline: auto; padding-block: clamp(1.4rem, 4vh, 2.75rem) 0.5rem; }
+.home-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.1rem 2.5rem; }
+.home-top h1 { max-width: 28ch; margin: 0; font-size: clamp(2rem, 1.2rem + 1.6vw, 2.4rem); text-wrap: balance; }
+.home-top .actions { margin: 0; }
+.home-fac { font: 400 0.98rem/1.5 var(--ui); color: var(--muted); margin: 1.5rem 0 0; padding-top: 0.9rem; border-top: 1px solid var(--rule); max-width: 64ch; }
+
+/* The walkthrough: one board, seven steps. Scenes show by step (vis + onN), the pieces that
+   carry over move between steps (wk-m), and a step's strokes draw when it starts (go, which
+   walkthrough.js adds to that step's aN elements). Without the script, step 2 stands still
+   and the captions read as a numbered list. */
+.walk { margin-top: 1.6rem; }
+.walk-board { display: block; width: 100%; height: auto; }
+.walk-board .w-frame { fill: #FCFDFD; stroke: var(--frame); stroke-width: 12; }
+.walk-board .w-tray { fill: #BFC4CA; }
+.walk-board .w-marker { fill: var(--marker); }
+.walk-board .w-cap { fill: var(--marker-deep); }
+.walk-board text { font-family: var(--hand); fill: var(--marker); }
+.walk-board .w-h { font-size: 40px; font-weight: 700; }
+.walk-board .w-s { font-size: 27px; }
+.walk-board .w-r { font-size: 28px; font-weight: 700; fill: var(--redpen); }
+.walk-board .w-sheet { fill: var(--paper); stroke: var(--marker); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.walk-board .w-ink, .walk-board .w-lt, .walk-board .w-red, .walk-board .w-cam { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.walk-board .w-ink { stroke: var(--marker); stroke-width: 3.2; }
+.walk-board .w-lt { stroke: #9BAAD6; stroke-width: 3; }
+.walk-board .w-red { stroke: var(--redpen); stroke-width: 3.6; }
+.walk-board .w-cam { stroke: var(--ink); stroke-width: 5; }
+.walk-board .w-thick { stroke-width: 5; }
+.walk-board .w-dot { fill: var(--marker); }
+.walk-board .w-thumb { fill: var(--paper); stroke: var(--frame); stroke-width: 8; }
+
+.walk .vis { opacity: 0; transition: opacity 0.45s ease; }
+.walk[data-step="1"] .on1, .walk[data-step="2"] .on2, .walk[data-step="3"] .on3, .walk[data-step="4"] .on4,
+.walk[data-step="5"] .on5, .walk[data-step="6"] .on6, .walk[data-step="7"] .on7 { opacity: 1; }
+.walk.is-pending .vis { opacity: 0; }
+
+/* Where the carried-over pieces sit in each step. Coordinates are the board's own (960 by 520). */
+.walk .wk-m { transform-box: view-box; transform-origin: 0 0; transition: transform 0.9s cubic-bezier(0.6, 0, 0.2, 1), opacity 0.45s ease; }
+.walk:not([data-step="1"]) .wk-cv { transform: translate(24.5px, 252.5px) scale(0.25); }
+.walk:not([data-step="1"]) .wk-intake { transform: translate(16.5px, 252.5px) scale(0.25); }
+.walk[data-step="3"] .wk-board, .walk[data-step="4"] .wk-board, .walk[data-step="5"] .wk-board { transform: translate(55px, 127px) scale(0.25); }
+.walk[data-step="6"] .wk-board, .walk[data-step="7"] .wk-board { transform: translate(50.32px, 142.08px) scale(0.22); }
+.walk[data-step="4"] .wk-doc, .walk[data-step="5"] .wk-doc { transform: translate(-330px, 0); }
+.walk[data-step="6"] .wk-doc { transform: translate(-69px, 169px) scale(0.3); }
+.walk[data-step="7"] .wk-doc { transform: translate(304px, 136px) scale(0.24); }
+.walk[data-step="7"] .wk-time { transform: translate(558.56px, 109.4px) scale(0.36); }
+
+.walk-board .draw { stroke-dasharray: 1 2; }
+.walk-board .pop { transform-box: fill-box; transform-origin: center; }
+.walk-board .go { animation-duration: 0.5s; animation-timing-function: cubic-bezier(0.45, 0.05, 0.4, 1); animation-fill-mode: both; }
+.walk-board .go.slow { animation-duration: 0.95s; }
+.walk-board .go.draw { animation-name: wt-draw; }
+.walk-board .go.draw.w-sheet { animation-name: wt-sheet; }
+.walk-board .go.pop { animation-name: wt-pop; }
+.walk-board .go.write { animation-name: wt-write; animation-duration: 0.6s; animation-timing-function: linear; animation-fill-mode: backwards; }
+.walk-board .t1 { animation-delay: 0.12s; }
+.walk-board .t2 { animation-delay: 0.24s; }
+.walk-board .t3 { animation-delay: 0.36s; }
+.walk-board .t4 { animation-delay: 0.48s; }
+.walk-board .t5 { animation-delay: 0.60s; }
+.walk-board .t6 { animation-delay: 0.72s; }
+.walk-board .t7 { animation-delay: 0.84s; }
+.walk-board .t8 { animation-delay: 0.96s; }
+.walk-board .t9 { animation-delay: 1.08s; }
+.walk-board .t10 { animation-delay: 1.20s; }
+.walk-board .t11 { animation-delay: 1.32s; }
+.walk-board .t12 { animation-delay: 1.44s; }
+.walk-board .t13 { animation-delay: 1.56s; }
+.walk-board .t14 { animation-delay: 1.68s; }
+.walk-board .t15 { animation-delay: 1.80s; }
+.walk-board .t16 { animation-delay: 1.92s; }
+.walk-board .t17 { animation-delay: 2.04s; }
+.walk-board .t18 { animation-delay: 2.16s; }
+.walk-board .t19 { animation-delay: 2.28s; }
+.walk-board .t20 { animation-delay: 2.40s; }
+.walk-board .t21 { animation-delay: 2.52s; }
+.walk-board .t22 { animation-delay: 2.64s; }
+.walk-board .t23 { animation-delay: 2.76s; }
+.walk-board .t24 { animation-delay: 2.88s; }
+.walk-board .t25 { animation-delay: 3.00s; }
+.walk-board .t26 { animation-delay: 3.12s; }
+.walk-board .t27 { animation-delay: 3.24s; }
+@keyframes wt-draw { from { stroke-dashoffset: 1.1; } to { stroke-dashoffset: 0; } }
+@keyframes wt-sheet { 0% { stroke-dashoffset: 1.1; fill-opacity: 0; } 75% { fill-opacity: 0; } 100% { stroke-dashoffset: 0; fill-opacity: 1; } }
+@keyframes wt-pop { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: none; } }
+@keyframes wt-write { from { clip-path: inset(-25% 100% -25% -4%); } to { clip-path: inset(-25% -4% -25% -4%); } }
+
+/* The steps. Wide screens put the caption beside the board's top edge with the steps listed
+   under it; narrow screens put a numbered rail under the board with the caption below. The
+   board narrows on short screens so the caption stays in view. */
+.walk { --walk-board-max: max(22rem, (100vh - 13rem) * 1.846); }
+@supports (height: 100svh) { .walk { --walk-board-max: max(22rem, (100svh - 13rem) * 1.846); } }
+.walk-board { max-width: var(--walk-board-max); }
+.walk-toggle, .walk-steps { display: none; }
+.walk-toggle { min-width: 5.4rem; padding: 0.5rem 0.75rem; font: 700 0.92rem/1.1 var(--ui); color: var(--marker); background: var(--paper); border: 2px solid var(--marker); border-radius: 6px; cursor: pointer; }
+.walk-toggle:hover { background: var(--marker-wash); color: var(--marker-deep); }
+.ws { position: relative; display: flex; align-items: center; gap: 0.55rem; padding: 0.4rem 0 0.6rem; background: none; border: 0; border-radius: 4px; color: var(--muted); font: 600 0.95rem/1.25 var(--ui); text-align: left; cursor: pointer; }
+.ws:hover { color: var(--marker); }
+.ws-n { flex: none; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border: 2px solid var(--frame); border-radius: 50%; background: var(--paper); color: var(--muted); font: 700 0.82rem/1 var(--ui); }
+.ws.is-past .ws-n { border-color: var(--marker); color: var(--marker); }
+.ws[aria-selected="true"] { color: var(--ink); }
+.ws[aria-selected="true"] .ws-n { border-color: var(--marker); background: var(--marker); color: #fff; }
+.ws-bar { position: absolute; left: 0; right: 0; bottom: 0.15rem; height: 3px; overflow: hidden; border-radius: 2px; background: var(--rule); }
+.ws-fill { display: block; height: 100%; background: var(--marker); transform: scaleX(0); transform-origin: left center; }
+.ws.is-past .ws-fill, .ws[aria-selected="true"] .ws-fill { transform: none; }
+.walk.is-pending .ws-fill { transform: scaleX(0); }
+.ws.is-timing .ws-fill { animation: wt-progress var(--walk-dwell, 7s) linear both; }
+.walk.is-paused .ws-fill, .walk.is-paused .go { animation-play-state: paused; }
+@keyframes wt-progress { from { transform: scaleX(0); } to { transform: none; } }
+
+.walk-say { max-width: 62ch; margin: 0; font-size: 1.04rem; line-height: 1.55; }
+.say-t { font-family: var(--ui); }
+.walk.is-ready .walk-toggle { display: block; }
+.walk.is-ready .walk-steps { display: flex; }
+.walk.is-ready .walk-says { display: grid; }
+.walk.is-ready .walk-say { grid-area: 1 / 1; visibility: hidden; }
+.walk.is-ready .walk-say.is-on { visibility: visible; }
+
+/* Without the script: step 2 stands still, and the captions read as a numbered list. */
+.walk:not(.is-ready) .walk-side { margin-top: 1rem; counter-reset: say; }
+.walk:not(.is-ready) .walk-say { counter-increment: say; position: relative; padding-left: 2.3rem; margin-bottom: 0.7rem; }
+.walk:not(.is-ready) .walk-say::before { content: counter(say); position: absolute; left: 0; top: 0.1rem; width: 1.6rem; height: 1.6rem; border: 2px solid var(--marker); border-radius: 50%; color: var(--marker); font: 700 0.82rem/1.45rem var(--ui); text-align: center; }
+
+@media (min-width: 62rem) {
+  .walk.is-ready { display: grid; grid-template-columns: minmax(0, var(--walk-board-max)) minmax(15rem, 19rem); gap: 0 2.5rem; align-items: start; }
+  .walk.is-ready .walk-side { display: grid; grid-template-areas: "toggle" "says" "steps"; align-content: start; }
+  .walk.is-ready .walk-toggle { grid-area: toggle; justify-self: start; margin-bottom: 1rem; }
+  .walk.is-ready .walk-says { grid-area: says; margin-bottom: 1.1rem; }
+  .walk.is-ready .say-t { display: block; font-size: 1.12rem; line-height: 1.3; margin-bottom: 0.35rem; }
+  .walk.is-ready .say-dot { display: none; }
+  .walk.is-ready .walk-say { font-size: 1rem; }
+  .walk.is-ready .walk-steps { grid-area: steps; flex-direction: column; padding-top: 0.5rem; border-top: 1px solid var(--rule); }
+  .walk.is-ready .ws:not([aria-selected="true"]) .ws-bar { visibility: hidden; }
+}
+@media (max-width: 61.99rem) {
+  .walk.is-ready .walk-side { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "toggle steps" "says says"; align-items: center; gap: 0.8rem 0.75rem; margin-top: 0.75rem; }
+  .walk.is-ready .walk-toggle { grid-area: toggle; }
+  .walk.is-ready .walk-steps { grid-area: steps; gap: 0.25rem; }
+  .walk.is-ready .ws { flex: 1 1 0; min-width: 0; justify-content: center; padding-inline: 0; }
+  .walk.is-ready .ws-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .walk.is-ready .walk-says { grid-area: says; }
+}
 
 /* The board */
 .board { display: block; width: 100%; }
@@ -224,7 +349,6 @@ ul.keeps li:last-child { border-bottom: 1px solid var(--rule); }
 .keeps span { color: var(--muted); }
 .handoff .actions, .handoff-builder .actions { margin-top: 0; }
 .fine { font: 400 0.9rem/1.5 var(--ui); color: var(--muted); margin: 0.9rem 0 0; max-width: 62ch; }
-.hero-fac { font: 400 0.98rem/1.5 var(--ui); color: var(--muted); margin: 1.2rem 0 0; max-width: 46ch; }
 .handoff-builder { max-width: var(--measure); margin-top: 2.6rem; padding-top: 0.9rem; border-top: 2px solid var(--ink); }
 .handoff-builder h2 { margin-top: 0; }
 .export-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; margin: 1rem 0 1.2rem; }
@@ -242,12 +366,8 @@ ul.keeps li:last-child { border-bottom: 1px solid var(--rule); }
   .b-out { position: static; }
 }
 @media (max-width: 900px) {
-  .hero-grid { grid-template-columns: minmax(0, 1fr); }
   .doc { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
   .toc { position: static; }
-  .two-col { grid-template-columns: 1fr; gap: 1rem; }
-  .path-compact li { grid-template-columns: 2rem 1fr; }
-  .pc-does { grid-column: 2; }
   ul.keeps li { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 560px) {
@@ -255,12 +375,19 @@ ul.keeps li:last-child { border-bottom: 1px solid var(--rule); }
   .b-form .row3 { grid-template-columns: 1fr; }
   .sheet { padding: 1rem; }
 }
-@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+  .walk-board .go { animation: none !important; }
+}
 
 /* Print: the whiteboard kit, the checklist, and the rubric are meant for paper. */
 @media print {
   body { background: #fff; font-size: 11pt; }
-  .site-head, .site-foot, .toc, .skip, .actions, .builder, .handoff-builder, .hero-fac, noscript { display: none !important; }
+  .site-head, .site-foot, .toc, .skip, .actions, .builder, .handoff-builder, .home-fac, noscript { display: none !important; }
+  .walk.is-ready, .walk.is-ready .walk-side, .walk.is-ready .walk-says { display: block; }
+  .walk-steps, .walk-toggle { display: none !important; }
+  .walk.is-ready .walk-say { visibility: visible; margin: 0 0 0.5rem; }
+  .walk.is-ready .say-t { display: inline; font-size: inherit; }
   .doc { display: block; padding: 0; }
   a { color: inherit; text-decoration: none; }
   .checklist input { border: 1px solid #000; }

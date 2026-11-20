@@ -1,6 +1,11 @@
 # The path from a blank board to a tracked agenda. The order is the method.
+# walk is the home page walkthrough's caption for the stage's scene in
+# templates/partials/walkthrough.svg: Markdown, 30 words at most.
 - id: intake
   title: Gather the record
+  walk: >-
+    Bring your own curriculum vitae (CV) and a one-page intake: your funding, your people, what
+    you want to be known for, and what to leave out.
   who: Faculty member
   time: 30 minutes
   does: >-
@@ -11,6 +16,9 @@
   prompt: ""
 - id: whiteboard
   title: Run the whiteboard session
+  walk: >-
+    With a facilitator and another colleague, put your field, an objective, and three challenges
+    on one board. Prompt 1 turns the photo into a transcription you confirm.
   who: Faculty member, facilitator, and at least one more colleague
   time: 75 minutes
   does: >-
@@ -21,6 +29,9 @@
   prompt: "01-whiteboard-transcription"
 - id: draft
   title: Draft the agenda
+  walk: >-
+    Prompt 2 drafts the agenda from the transcription, the CV, the intake, and your field's
+    profile. It carries its own claims ledger and open decisions.
   who: Faculty member or facilitator
   time: 1 hour, plus reading
   does: >-
@@ -30,6 +41,9 @@
   prompt: "02-draft-agenda"
 - id: redteam
   title: Red-team the draft
+  walk: >-
+    Prompt 3 tests the draft the way your field's toughest reviewer would. Each claim it cannot
+    trace to a source stays open on the ledger.
   who: Mentor, or the faculty member before the mentoring session
   time: 1 hour, plus reading
   does: >-
@@ -40,6 +54,9 @@
   prompt: "03-red-team"
 - id: decide
   title: Decide, then revise
+  walk: >-
+    Answer the open decisions one at a time with your mentor. Prompt 4 writes version 2: every
+    claim resolved, every gate dated, and ninety days of actions.
   who: Faculty member with the mentor
   time: 60-minute session
   does: >-
@@ -49,6 +66,10 @@
   prompt: "04-decisions-and-v2"
 - id: track
   title: Track it
+  walk: >-
+    Seed a tracker from version 2 with prompt 5, or keep the agenda in
+    [Facultory]({{facultory_signup}}). Fifteen minutes a week shows a slipping gate before the
+    annual review does.
   who: Faculty member; mentor checks in monthly
   time: 15 minutes a week
   does: >-
@@ -59,6 +80,9 @@
   prompt: "05-tracker-seed"
 - id: refresh
   title: Refresh every year
+  walk: >-
+    A month before each annual review, prompt 6 compares the scoreboard with the targets and
+    re-checks the claims. Decide what changes and rewrite only those sections.
   who: Faculty member with the mentor
   time: 60-minute session
   does: >-

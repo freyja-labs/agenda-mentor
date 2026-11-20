@@ -111,6 +111,11 @@ def md(text: str) -> str:
     return markdown.markdown(text, extensions=["tables", "fenced_code", "attr_list", "sane_lists"])
 
 
+def md_inline(text: str) -> str:
+    """One paragraph of Markdown as HTML with no <p> around it, for a caption."""
+    return re.sub(r"^<p>([\s\S]*)</p>$", r"\1", md(text.strip()).strip())
+
+
 def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
 
@@ -154,7 +159,7 @@ def profile_block(p: dict) -> str:
 
 # --------------------------------------------------------------------------- checks
 
-def check(cfg, profiles, prompts, anatomy) -> list[str]:
+def check(cfg, profiles, prompts, anatomy, stages) -> list[str]:
     errors = []
     ids = set()
     for p in profiles:
@@ -209,6 +214,29 @@ def check(cfg, profiles, prompts, anatomy) -> list[str]:
     intake = schema["properties"].get("intake", {}).get("properties", {})
     if list(intake) != INTAKE_FIELDS:
         errors.append(f"schema intake keys {list(intake)} do not match the builder's intake fields {INTAKE_FIELDS}")
+    errors += check_walkthrough(stages, {p["id"]: p["n"] for p in prompts})
+    return errors
+
+
+def check_walkthrough(stages, prompt_numbers) -> list[str]:
+    """The home page walkthrough draws one scene per stage and captions it from the stage."""
+    errors = []
+    for s in stages:
+        where = f"data/stages.yaml {s.get('id', '?')}"
+        walk = str(s.get("walk", "")).strip()
+        words = len(re.sub(r"\]\([^)]*\)", "]", walk).split())
+        if not 0 < words <= 30:
+            errors.append(f"{where}: walk has {words} words; the walkthrough caption needs 1 to 30")
+        named = {int(n) for n in re.findall(r"\b[Pp]rompt (\d+)", walk)}
+        own = prompt_numbers.get(s.get("prompt", ""))
+        if named and named != {own}:
+            errors.append(f"{where}: walk names prompt {sorted(named)}, but this stage uses prompt {own}")
+    svg = (TEMPLATES / "partials" / "walkthrough.svg").read_text(encoding="utf-8")
+    classes = " ".join(re.findall(r'class="([^"]*)"', svg)).split()
+    scenes = {int(m.group(1)) for c in classes if (m := re.fullmatch(r"(?:on|a)(\d+)", c))}
+    if scenes != set(range(1, len(stages) + 1)):
+        errors.append(f"templates/partials/walkthrough.svg draws scenes {sorted(scenes)}; "
+                      f"data/stages.yaml has {len(stages)} stages")
     return errors
 
 
@@ -247,7 +275,7 @@ def build(out: Path, check_only: bool) -> int:
     rubric, sessions, checklist = load_yaml("rubric.yaml"), load_yaml("sessions.yaml"), load_yaml("checklist.yaml")
     prompts = read_prompts()
 
-    errors = check(cfg, profiles, prompts, anatomy)
+    errors = check(cfg, profiles, prompts, anatomy, stages)
     if errors:
         print("\n".join(f"error: {e}" for e in errors), file=sys.stderr)
         return 1
@@ -306,9 +334,10 @@ def build(out: Path, check_only: bool) -> int:
         body_html, toc = add_heading_ids(body_html)
         return meta, body_html, toc
 
-    # Home
-    write("index.html", "home.html", slug="", stages=stages, prompts=prompt_by_id, profiles=profiles,
-          board=env.get_template("partials/board.svg").render(redpen=True, label="hero-board"))
+    # Home: a one-line promise and the walkthrough, one scene and one caption per stage.
+    walk = [{**s, "walk_html": md_inline(str(s["walk"]).replace("{{facultory_signup}}", fac["signup"]))}
+            for s in stages]
+    write("index.html", "home.html", slug="", stages=walk)
 
     # Content pages
     for slug in ("method", "whiteboard", "mentors", "verify", "track", "about"):

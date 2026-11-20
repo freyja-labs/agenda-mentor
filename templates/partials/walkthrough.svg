@@ -1,0 +1,216 @@
+<svg class="walk-board" viewBox="0 0 960 520" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  {#- The home page walkthrough: one whiteboard, one scene per stage in data/stages.yaml.
+      vis + onN: shown in step N. aN: drawn when step N starts (draw = stroke, write = wipe,
+      pop = appear); tN sets the delay. wk-m groups move between steps (site.css), so the
+      record and the board become the draft's inputs, the draft becomes version 2, and the
+      tracker loops back to the board. Red appears only in step 4, where claims need a source.
+      No style attributes: the content security policy refuses them. #}
+  <rect class="w-frame" x="10" y="10" width="940" height="486" rx="12"/>
+  <rect class="w-tray" x="300" y="498" width="360" height="14" rx="4"/>
+  <rect class="w-marker" x="512" y="489" width="70" height="11" rx="5.5"/>
+  <rect class="w-cap" x="574" y="489" width="16" height="11" rx="3"/>
+
+  {# 2. The whiteboard session. Shrinks to a photo for the draft (3) and the refresh loop (7). #}
+  <g class="wk-m wk-board vis on2 on3 on7">
+    <path class="w-thumb vis on3 on7" d="M44 36 H916 V472 H44 Z"/>
+    <text class="w-h write a2 t2" x="90" y="112">Field</text>
+    <path class="w-lt draw a2 t3" pathLength="1" d="M196 116 q130 -6 268 1"/>
+    <text class="w-h write a2 t4" x="90" y="168">Area</text>
+    <path class="w-lt draw a2 t5" pathLength="1" d="M186 172 q140 5 278 -2"/>
+    <text class="w-h write a2 t6" x="90" y="224">Topic</text>
+    <path class="w-lt draw a2 t7" pathLength="1" d="M198 228 q130 -4 266 2"/>
+    <path class="w-ink draw slow a2 t8" pathLength="1" d="M560 62 q160 -6 322 2 q6 88 -2 178 q-162 6 -320 -3 q-6 -88 0 -177 z"/>
+    <text class="w-h write a2 t10" x="586" y="114">Objective</text>
+    <path class="w-ink draw a2 t11" pathLength="1" d="M586 126 q64 -3 132 1"/>
+    <text class="w-s write a2 t12" x="586" y="172">What can someone do</text>
+    <text class="w-s write a2 t13" x="586" y="210">that they can't today?</text>
+    <g transform="translate(80 300)">
+      <path class="w-ink draw a2 t14" pathLength="1" d="M47 22 a23 23 0 1 1 -46 0 a23 23 0 1 1 46 0"/>
+      <text class="w-h write a2 t15" x="24" y="36" text-anchor="middle">1</text>
+      <text class="w-h write a2 t15" x="64" y="36">Challenge</text>
+      <path class="w-lt draw a2 t16" pathLength="1" d="M64 80 q100 -4 196 2"/>
+      <path class="w-lt draw a2 t17" pathLength="1" d="M64 116 q90 3 184 -2"/>
+      <path class="w-lt draw a2 t18" pathLength="1" d="M64 152 q96 -3 190 1"/>
+    </g>
+    <g transform="translate(355 300)">
+      <path class="w-ink draw a2 t17" pathLength="1" d="M47 22 a23 23 0 1 1 -46 0 a23 23 0 1 1 46 0"/>
+      <text class="w-h write a2 t18" x="24" y="36" text-anchor="middle">2</text>
+      <text class="w-h write a2 t18" x="64" y="36">Challenge</text>
+      <path class="w-lt draw a2 t19" pathLength="1" d="M64 80 q104 4 200 -2"/>
+      <path class="w-lt draw a2 t20" pathLength="1" d="M64 116 q94 -4 188 1"/>
+      <path class="w-lt draw a2 t21" pathLength="1" d="M64 152 q88 3 180 -1"/>
+    </g>
+    <g transform="translate(630 300)">
+      <path class="w-ink draw a2 t20" pathLength="1" d="M47 22 a23 23 0 1 1 -46 0 a23 23 0 1 1 46 0"/>
+      <text class="w-h write a2 t21" x="24" y="36" text-anchor="middle">3</text>
+      <text class="w-h write a2 t21" x="64" y="36">Challenge</text>
+      <path class="w-lt draw a2 t22" pathLength="1" d="M64 80 q98 -4 194 2"/>
+      <path class="w-lt draw a2 t23" pathLength="1" d="M64 116 q92 3 186 -2"/>
+      <path class="w-lt draw a2 t24" pathLength="1" d="M64 152 q90 -3 176 1"/>
+    </g>
+    <path class="w-cam draw a2 t26" pathLength="1" d="M56 82 V46 H92"/>
+    <path class="w-cam draw a2 t26" pathLength="1" d="M868 46 H904 V82"/>
+    <path class="w-cam draw a2 t27" pathLength="1" d="M56 426 V462 H92"/>
+    <path class="w-cam draw a2 t27" pathLength="1" d="M868 462 H904 V426"/>
+  </g>
+
+  {# 1. The record: the faculty member's own CV and the one-page intake. #}
+  <g class="wk-m wk-cv vis on1 on3">
+    <path class="w-sheet draw slow a1 t0" pathLength="1" d="M150 70 H358 L390 102 V440 H150 Z"/>
+    <path class="w-ink draw a1 t3" pathLength="1" d="M358 70 V102 H390"/>
+    <text class="w-h write a1 t3" x="176" y="136">CV</text>
+    <path class="w-lt draw a1 t4" pathLength="1" d="M176 172 q86 -3 176 1"/>
+    <path class="w-lt draw a1 t5" pathLength="1" d="M176 198 q76 2 154 -1"/>
+    <path class="w-lt draw a1 t6" pathLength="1" d="M176 224 q60 -2 120 1"/>
+    <path class="w-ink draw a1 t7" pathLength="1" d="M176 264 q38 -2 76 1"/>
+    <path class="w-lt draw a1 t8" pathLength="1" d="M176 292 q88 2 174 -1"/>
+    <path class="w-lt draw a1 t9" pathLength="1" d="M176 318 q80 -3 162 1"/>
+    <path class="w-lt draw a1 t10" pathLength="1" d="M176 344 q62 2 126 -1"/>
+    <path class="w-ink draw a1 t11" pathLength="1" d="M176 384 q32 -2 64 1"/>
+    <path class="w-lt draw a1 t12" pathLength="1" d="M176 410 q84 2 168 -1"/>
+  </g>
+  <g class="wk-m wk-intake vis on1 on3">
+    <path class="w-sheet draw slow a1 t3" pathLength="1" d="M470 70 H778 L810 102 V440 H470 Z"/>
+    <path class="w-ink draw a1 t7" pathLength="1" d="M778 70 V102 H810"/>
+    <text class="w-h write a1 t7" x="496" y="136">Intake</text>
+    <text class="w-s write a1 t8" x="496" y="190">Known for</text>
+    <path class="w-lt draw a1 t9" pathLength="1" d="M630 186 q74 -3 150 1"/>
+    <text class="w-s write a1 t10" x="496" y="234">Funding</text>
+    <path class="w-lt draw a1 t11" pathLength="1" d="M630 230 q62 2 130 -1"/>
+    <text class="w-s write a1 t12" x="496" y="278">People</text>
+    <path class="w-lt draw a1 t13" pathLength="1" d="M630 274 q74 -2 152 1"/>
+    <text class="w-s write a1 t14" x="496" y="322">Load</text>
+    <path class="w-lt draw a1 t15" pathLength="1" d="M630 318 q52 2 106 -1"/>
+    <text class="w-s write a1 t16" x="496" y="366">Context</text>
+    <path class="w-lt draw a1 t17" pathLength="1" d="M630 362 q68 -2 140 1"/>
+    <text class="w-s write a1 t18" x="496" y="410">Leave out</text>
+    <path class="w-lt draw a1 t19" pathLength="1" d="M630 406 q58 2 120 -1"/>
+  </g>
+
+  {# 3. The draft's last input, the discipline profile, and the prompt that turns inputs into a draft. #}
+  <g class="vis on3" transform="translate(231 270) scale(.25)">
+    <path class="w-sheet draw a3 t5" pathLength="1" d="M0 0 H208 L240 32 V370 H0 Z"/>
+    <path class="w-ink draw a3 t6" pathLength="1" d="M208 0 V32 H240"/>
+    <text class="w-h write a3 t6" x="26" y="66">Profile</text>
+    <path class="w-lt draw a3 t7" pathLength="1" d="M26 104 q86 -3 176 1"/>
+    <path class="w-lt draw a3 t7" pathLength="1" d="M26 132 q76 2 154 -1"/>
+    <path class="w-lt draw a3 t8" pathLength="1" d="M26 160 q60 -2 120 1"/>
+    <path class="w-lt draw a3 t8" pathLength="1" d="M26 196 q88 2 174 -1"/>
+    <path class="w-lt draw a3 t9" pathLength="1" d="M26 224 q80 -3 162 1"/>
+  </g>
+  <g class="vis on3">
+    <text class="w-s write a3 t8" x="318" y="230">prompt 2</text>
+    <path class="w-ink draw a3 t9" pathLength="1" d="M314 252 q54 -6 106 -2"/>
+    <path class="w-ink draw a3 t11" pathLength="1" d="M404 238 l16 12 l-18 12"/>
+  </g>
+
+  {# 3 to 7. The agenda: drafted (3), marked up (4), revised into version 2 (5), then the tracker's seed (6) and a node in the yearly loop (7). #}
+  <g class="wk-m wk-doc vis on3 on4 on5 on6 on7">
+    <path class="w-sheet draw slow a3 t7" pathLength="1" d="M450 50 H814 L850 86 V470 H450 Z"/>
+    <path class="w-ink draw a3 t10" pathLength="1" d="M814 50 V86 H850"/>
+    <g class="vis on3 on4"><text class="w-h write a3 t10" x="478" y="114">Draft agenda</text></g>
+    <g class="vis on5 on6 on7"><text class="w-h write a5 t5" x="478" y="114">Version 2</text></g>
+    <path class="w-ink draw a3 t11" pathLength="1" d="M478 154 q52 -2 106 1"/>
+    <path class="w-lt draw a3 t12" pathLength="1" d="M478 180 q150 -3 300 1"/>
+    <path class="w-lt draw a3 t13" pathLength="1" d="M478 204 q128 2 252 -1"/>
+    <path class="w-ink draw a3 t14" pathLength="1" d="M478 240 q62 2 126 -1"/>
+    <path class="w-lt draw a3 t15" pathLength="1" d="M478 266 q146 2 292 -1"/>
+    <path class="w-lt draw a3 t16" pathLength="1" d="M478 290 q116 -2 232 1"/>
+    <path class="w-ink draw a3 t17" pathLength="1" d="M478 326 q48 -2 98 1"/>
+    <g class="vis on3 on4"><path class="w-lt draw a3 t18" pathLength="1" d="M478 352 q152 -2 310 1"/></g>
+    <g class="vis on5 on6 on7"><path class="w-ink draw a5 t9" pathLength="1" d="M478 352 q140 -2 284 1"/></g>
+    <path class="w-lt draw a3 t19" pathLength="1" d="M478 376 q122 2 246 -1"/>
+    <path class="w-ink draw a3 t20" pathLength="1" d="M478 412 q58 2 118 -1"/>
+    <path class="w-lt draw a3 t21" pathLength="1" d="M478 438 q148 2 298 -1"/>
+    <g class="vis on4">
+      <path class="w-red draw slow a4 t11" pathLength="1" d="M466 246 C 456 222, 606 214, 618 234 C 628 254, 498 264, 472 236"/>
+      <text class="w-r write a4 t12" x="632" y="250">source?</text>
+      <path class="w-red draw slow a4 t14" pathLength="1" d="M472 356 q11 -20 22 -2 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0 t22 0"/>
+      <text class="w-r write a4 t17" x="612" y="422">date?</text>
+    </g>
+    <g class="vis on5 on6 on7">
+      <path class="w-ink w-thick draw a5 t7" pathLength="1" d="M624 238 l10 12 l22 -26"/>
+      <path class="w-ink w-thick draw a5 t10" pathLength="1" d="M796 350 l10 12 l22 -26"/>
+      <path class="w-ink w-thick draw a5 t12" pathLength="1" d="M612 410 l10 12 l22 -26"/>
+    </g>
+  </g>
+
+  {# 4 and 5. The claims ledger and the first open decision, beside the draft. #}
+  <g class="vis on4 on5">
+    <path class="w-sheet draw slow a4 t7" pathLength="1" d="M580 58 H890 V258 H580 Z"/>
+    <text class="w-h write a4 t9" x="604" y="106">Claims</text>
+    <path class="w-ink draw a4 t10" pathLength="1" d="M604 118 q58 -3 122 1"/>
+    <text class="w-s write a4 t11" x="604" y="160">CL-01</text>
+    <path class="w-lt draw a4 t11" pathLength="1" d="M688 156 q36 -2 72 1"/>
+    <text class="w-s write a4 t14" x="604" y="200">CL-02</text>
+    <path class="w-lt draw a4 t14" pathLength="1" d="M688 196 q34 2 68 -1"/>
+    <text class="w-s write a4 t17" x="604" y="240">CL-03</text>
+    <path class="w-lt draw a4 t17" pathLength="1" d="M688 236 q36 -2 74 1"/>
+    <g class="vis on4">
+      <text class="w-r write a4 t13" x="774" y="160">open</text>
+      <text class="w-r write a4 t16" x="774" y="200">open</text>
+      <text class="w-r write a4 t18" x="774" y="240">open</text>
+    </g>
+    <g class="vis on5">
+      <text class="w-s write a5 t7" x="774" y="160">fixed</text>
+      <text class="w-s write a5 t10" x="774" y="200">fixed</text>
+      <text class="w-s write a5 t12" x="774" y="240">accepted</text>
+    </g>
+  </g>
+  <g class="vis on4 on5">
+    <path class="w-sheet draw slow a4 t19" pathLength="1" d="M580 288 H890 V468 H580 Z"/>
+    <text class="w-h write a4 t20" x="604" y="338">D-01</text>
+    <path class="w-lt draw a4 t21" pathLength="1" d="M694 332 q80 -3 172 1"/>
+    <path class="w-ink draw a4 t22" pathLength="1" d="M636 380 a13 13 0 1 1 -26 0 a13 13 0 1 1 26 0"/>
+    <path class="w-lt draw a4 t22" pathLength="1" d="M652 382 q90 -2 196 1"/>
+    <path class="w-ink draw a4 t23" pathLength="1" d="M636 428 a13 13 0 1 1 -26 0 a13 13 0 1 1 26 0"/>
+    <path class="w-lt draw a4 t23" pathLength="1" d="M652 430 q80 2 176 -1"/>
+    <g class="vis on5"><path class="w-ink w-thick draw a5 t2" pathLength="1" d="M606 424 l12 14 l28 -36"/></g>
+  </g>
+
+  {# 6 and 7. The tracker: version 2's gates across the horizon, with month 24 as the make-or-break result. #}
+  <g class="wk-m wk-time vis on6 on7">
+    <path class="w-ink w-thick draw slow a6 t6" pathLength="1" d="M204 247 q350 -6 700 0"/>
+    <text class="w-s write a6 t7" x="204" y="292">now</text>
+    <circle class="w-dot pop a6 t8" cx="274" cy="247" r="8"/>
+    <circle class="w-dot pop a6 t9" cx="344" cy="247" r="8"/>
+    <path class="w-ink w-thick draw a6 t10" pathLength="1" d="M509 247 a24 24 0 1 1 -48 0 a24 24 0 1 1 48 0"/>
+    <text class="w-s write a6 t11" x="485" y="208" text-anchor="middle">make or break</text>
+    <text class="w-s write a6 t11" x="485" y="302" text-anchor="middle">month 24</text>
+    <circle class="w-dot pop a6 t12" cx="625" cy="247" r="8"/>
+    <circle class="w-dot pop a6 t13" cx="766" cy="247" r="8"/>
+    <path class="w-ink w-thick draw a6 t13" pathLength="1" d="M888 233 l18 14 l-18 14"/>
+    <text class="w-s write a6 t14" x="906" y="292" text-anchor="end">year 5</text>
+  </g>
+  <g class="vis on6">
+    <path class="w-ink draw a6 t15" pathLength="1" d="M296 352 H404 V432 H296 Z"/>
+    <path class="w-ink w-thick draw a6 t16" pathLength="1" d="M320 420 V398"/>
+    <path class="w-ink w-thick draw a6 t16" pathLength="1" d="M342 420 V382"/>
+    <path class="w-ink w-thick draw a6 t17" pathLength="1" d="M364 420 V368"/>
+    <path class="w-ink w-thick draw a6 t17" pathLength="1" d="M386 420 V390"/>
+    <text class="w-s write a6 t18" x="350" y="470" text-anchor="middle">dashboard</text>
+    <path class="w-ink draw a6 t17" pathLength="1" d="M500 360 H608 V432 H500 Z"/>
+    <path class="w-ink draw a6 t18" pathLength="1" d="M500 380 H608"/>
+    <path class="w-ink w-thick draw a6 t18" pathLength="1" d="M522 348 V368"/>
+    <path class="w-ink w-thick draw a6 t18" pathLength="1" d="M586 348 V368"/>
+    <path class="w-ink draw a6 t19" pathLength="1" d="M584 410 a12 12 0 1 1 -24 0 a12 12 0 1 1 24 0"/>
+    <text class="w-s write a6 t20" x="554" y="470" text-anchor="middle">calendar</text>
+    <path class="w-ink draw a6 t19" pathLength="1" d="M700 360 H812 V432 H700 Z"/>
+    <path class="w-ink draw a6 t20" pathLength="1" d="M700 362 L756 402 L812 362"/>
+    <text class="w-s write a6 t21" x="756" y="470" text-anchor="middle">weekly digest</text>
+  </g>
+
+  {# 7. Every year: the board, the agenda, and the tracker in a loop back to the board. #}
+  <g class="vis on7">
+    <text class="w-s write a7 t7" x="156" y="134" text-anchor="middle">board</text>
+    <text class="w-s write a7 t8" x="460" y="134" text-anchor="middle">agenda</text>
+    <text class="w-s write a7 t9" x="758" y="134" text-anchor="middle">tracker</text>
+    <path class="w-ink draw a7 t9" pathLength="1" d="M264 200 q66 -10 130 -2"/>
+    <path class="w-ink draw a7 t10" pathLength="1" d="M378 186 l16 12 l-16 12"/>
+    <path class="w-ink draw a7 t11" pathLength="1" d="M522 200 q48 -8 94 -2"/>
+    <path class="w-ink draw a7 t12" pathLength="1" d="M600 188 l16 10 l-16 12"/>
+    <path class="w-ink w-thick draw slow a7 t13" pathLength="1" d="M758 234 C 772 432, 146 440, 154 262"/>
+    <path class="w-ink w-thick draw a7 t20" pathLength="1" d="M138 280 L154 262 L170 281"/>
+    <text class="w-h write a7 t17" x="456" y="340" text-anchor="middle">every year</text>
+  </g>
+</svg>
