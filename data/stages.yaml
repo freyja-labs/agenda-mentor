@@ -24,8 +24,9 @@
   does: >-
     Put the field, the area, the topic, the objective, and three challenges on one board,
     each with the works that define it and the people already working on it. Photograph the
-    board, transcribe it, and have the faculty member confirm the transcription.
-  output: Photo and confirmed transcription
+    board, transcribe it, and have the faculty member confirm the transcription. With no
+    whiteboard in the room, the typed board takes the same regions and needs no photo.
+  output: Photo and confirmed transcription, or a typed board
   prompt: "01-whiteboard-transcription"
 - id: draft
   title: Draft the agenda

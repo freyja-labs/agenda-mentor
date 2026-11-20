@@ -26,7 +26,7 @@
     "version": { "type": "integer", "minimum": 1 },
     "horizon_years": { "type": "integer", "minimum": 1, "maximum": 10, "default": 5 },
     "makeorbreak_months": { "type": "integer", "minimum": 6, "maximum": 48, "default": 24 },
-    "whiteboard": { "type": "string", "description": "The confirmed transcription from prompt 1." },
+    "whiteboard": { "type": "string", "description": "The confirmed transcription from prompt 1, or a typed board's text." },
     "field": { "type": "string", "description": "The field in the faculty member's own words, as they would describe it to a program officer." },
     "intake": {
       "type": "object",

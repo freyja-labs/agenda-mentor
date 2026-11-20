@@ -1,6 +1,6 @@
 # Prompt 2: Draft the research agenda
 
-Use after the whiteboard session and after the faculty member has confirmed the transcription from prompt 1. Attach the current CV (the faculty member's own file, not a public bio) and the whiteboard photo. The portal's prompt builder fills every `{{placeholder}}` and pastes in the discipline profile; to fill it by hand, replace each placeholder and delete any `{{#if}}` block you have nothing for.
+Use after the whiteboard session and after the faculty member has confirmed the transcription from prompt 1, or the text of a typed board. Attach the current CV (the faculty member's own file, not a public bio) and the whiteboard photo, if there is one. The portal's prompt builder fills every `{{placeholder}}` and pastes in the discipline profile; to fill it by hand, replace each placeholder and delete any `{{#if}}` block you have nothing for.
 
 ---
 

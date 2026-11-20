@@ -5,7 +5,9 @@ nav: Whiteboard
 order: 2
 ---
 
-The whiteboard is the only input the faculty member writes by hand, and it outranks everything else. The draft treats it as the faculty member's own statement of the problem; anything the board leaves blank is labeled as a suggestion. A good board takes 75 minutes and three people.
+The whiteboard is the only input the faculty member writes themselves, and it outranks everything else. The draft treats it as the faculty member's own statement of the problem; anything the board leaves blank is labeled as a suggestion. A good board takes 75 minutes and three people.
+
+Meeting remotely, or no whiteboard in the room? [Type the board](type/index.html): the same regions with text boxes, kept in the faculty member's browser and sent straight to the prompt builder. A typed board needs no photo and no transcription prompt.
 
 ## Who is in the room
 
@@ -29,6 +31,8 @@ Run it with three or more people. A cohort can run several boards at once at tab
 
 ## Photographing the board
 
+A typed board has nothing to photograph; skip to the next section.
+
 - Shoot straight on, with the whole board in the frame.
 - Turn off the lights that cause glare, or step left or right until the glare clears the writing.
 - Take a second, closer photo of any dense region.
@@ -37,3 +41,5 @@ Run it with three or more people. A cohort can run several boards at once at tab
 ## After the session
 
 The transcription prompt returns the board's text, the readings it is unsure of, probable corrections (misspelled names are common), and up to five questions. The faculty member answers the questions and confirms the transcription before the draft runs. A misspelled author name on the board becomes a wrong citation in the draft if nobody catches it here.
+
+A typed board has no uncertain readings, so it skips prompt 1. Read it back to the faculty member, check the spelling of every name and title on it, and send it to the prompt builder.
